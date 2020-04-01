@@ -1,0 +1,54 @@
+﻿@model clase1posta.Models.Propietario
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Propietario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.idPropietario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.idPropietario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.apellido)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.apellido)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.dni)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.dni)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.telefono)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.telefono)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
