@@ -1,0 +1,99 @@
+﻿@model IEnumerable<clase1posta.Models.Inmueble>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+<link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table" id="tabla">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdInmueble)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPropietario)
+            </th>
+            <th>
+                Nombre Propietario
+            </th>
+            <th>
+                Apellido Propietario
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdTipo)
+            </th>
+            <th>
+                Tipo
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantAmbientes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdInmueble)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdPropietario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Propietario.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Propietario.apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdTipo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tipo.nombreTipo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CantAmbientes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.IdInmueble }) |
+
+                    @Html.ActionLink("Delete", "Delete", new { id = item.IdInmueble })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts
+{
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tabla').DataTable();
+        });</script>
+
+}

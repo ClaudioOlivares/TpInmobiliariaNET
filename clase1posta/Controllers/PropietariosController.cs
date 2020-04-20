@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using clase1posta.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 namespace clase1posta.Controllers
 {
+    [Authorize]
+
     public class PropietariosController : Controller
     {
         private readonly IConfiguration configuration;
@@ -89,7 +92,8 @@ namespace clase1posta.Controllers
         }
 
         // GET: Propietarios/Delete/5
-         public ActionResult Delete(int id)
+        [Authorize(Policy = "Administrador")]
+        public ActionResult Delete(int id)
         {
             var persona = repositorioPropietario.ObtenerPorId(id);
             return View(persona);

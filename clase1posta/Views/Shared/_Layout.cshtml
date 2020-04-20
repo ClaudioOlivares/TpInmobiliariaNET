@@ -28,13 +28,20 @@
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">clase1posta</a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Propietarios" asp-action="Index">Propietarios</a></li>
+                        <li><a asp-area="" asp-controller="Inquilino" asp-action="Index">Inquilino</a></li>
+                        <li><a asp-area="" asp-controller="Inmueble" asp-action="Index">Inmueble</a></li>
+
+                        <li style="float:right"><a asp-area="" asp-controller="Home" asp-action="Logout">Log Out</a></li>
+
+                    </ul>
+                </div>
+            }
+
         </div>
     </nav>
 
@@ -47,7 +54,7 @@
             <p>&copy; 2020 - clase1posta</p>
         </footer>
     </div>
-
+  
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>

@@ -1,0 +1,62 @@
+﻿@model clase1posta.Models.Inmueble
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Inmueble</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdInmueble)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdInmueble)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdPropietario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdPropietario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Direccion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdTipo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdTipo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CantAmbientes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CantAmbientes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Precio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Precio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

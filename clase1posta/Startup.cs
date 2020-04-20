@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -24,6 +26,16 @@ namespace clase1posta
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+
+            {
+                options.LoginPath = "/Home/Index";
+                options.AccessDeniedPath = "/Home/Restringido";
+            }
+
+
+            );
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -31,7 +43,21 @@ namespace clase1posta
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Administrador", policy =>
+                {
+                    policy.RequireClaim(ClaimTypes.Role, "Administrador");
+                    
+                });
 
+                options.AddPolicy("User", policy =>
+                {
+                    policy.RequireClaim(ClaimTypes.Role, "User");
+
+                });
+
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -52,6 +78,7 @@ namespace clase1posta
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

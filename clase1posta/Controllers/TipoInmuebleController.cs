@@ -3,53 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using clase1posta.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 namespace clase1posta.Controllers
 {
-    [Authorize]
-
-    public class InquilinoController : Controller
+    public class TipoInmuebleController : Controller
     {
         private readonly IConfiguration configuration;
-        private readonly RepositorioInquilino repositorioInquilino;
-        public InquilinoController(IConfiguration configuration)
+        private readonly RepositorioTipoInmueble repositorioTipo;
+        public TipoInmuebleController(IConfiguration configuration)
         {
             this.configuration = configuration;
-            repositorioInquilino = new RepositorioInquilino(configuration);
+            repositorioTipo = new RepositorioTipoInmueble(configuration);
         }
-        // GET: Inquilino
+        // GET: TipoInmueble
         public ActionResult Index()
         {
-            var lista = repositorioInquilino.ObtenerTodos();
-            return View(lista);
-        }
-
-        // GET: Inquilino/Details/5
-        public ActionResult Details(int id)
-        {
-            Inquilino p = repositorioInquilino.ObtenerPorId(id);
+            var p = repositorioTipo.ObtenerTodos();
             return View(p);
         }
 
-        // GET: Inquilino/Create
+        // GET: TipoInmueble/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
+        // GET: TipoInmueble/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Inquilino/Create
+        // POST: TipoInmueble/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Inquilino p)
+        public ActionResult Create(IFormCollection collection)
         {
             try
             {
                 // TODO: Add insert logic here
-                repositorioInquilino.Alta(p);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -58,49 +54,36 @@ namespace clase1posta.Controllers
             }
         }
 
-        // GET: Inquilino/Edit/5
+        // GET: TipoInmueble/Edit/5
         public ActionResult Edit(int id)
         {
-            var persona = repositorioInquilino.ObtenerPorId(id);
-            return View(persona);
+            return View();
         }
 
-        // POST: Inquilino/Edit/5
+        // POST: TipoInmueble/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
-            Inquilino pi = null;
             try
             {
                 // TODO: Add update logic here
-                pi = repositorioInquilino.ObtenerPorId(id);
-                pi.nombre = collection["nombre"];
-                pi.apellido = collection["apellido"];
-                pi.dni = collection["dni"];
-                pi.trabajo = collection["trabajo"];
-                pi.nombreGarante = collection["nombreGarante"];
-                pi.apellidoGarante = collection["apellidoGarante"];
-                pi.dniGarante = collection["dniGarante"];
-                repositorioInquilino.Modificacion(pi);
+
                 return RedirectToAction(nameof(Index));
             }
-            catch (System.Exception ex)
+            catch
             {
-                
                 return View();
             }
         }
 
-        // GET: Inquilino/Delete/5
-        [Authorize(Policy = "Administrador")]
+        // GET: TipoInmueble/Delete/5
         public ActionResult Delete(int id)
         {
-            var persona = repositorioInquilino.ObtenerPorId(id);
-            return View(persona);
+            return View();
         }
 
-        // POST: Inquilino/Delete/5
+        // POST: TipoInmueble/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
@@ -108,7 +91,7 @@ namespace clase1posta.Controllers
             try
             {
                 // TODO: Add delete logic here
-                repositorioInquilino.Baja(id);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
