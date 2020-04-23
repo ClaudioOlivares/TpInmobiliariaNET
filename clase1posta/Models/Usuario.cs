@@ -11,6 +11,7 @@ namespace clase1posta.Models
         public int IdUsuario { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         [DataType(DataType.Password)]
         public string Clave { get; set; }

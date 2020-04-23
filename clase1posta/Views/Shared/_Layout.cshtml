@@ -36,8 +36,14 @@
                         <li><a asp-area="" asp-controller="Inquilino" asp-action="Index">Inquilino</a></li>
                         <li><a asp-area="" asp-controller="Inmueble" asp-action="Index">Inmueble</a></li>
 
-                        <li style="float:right"><a asp-area="" asp-controller="Home" asp-action="Logout">Log Out</a></li>
 
+                        @if (User.IsInRole("Administrador"))
+                        {
+                            <li><a asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a></li>
+                        }
+
+
+                        <li style="float:right"><a asp-area="" asp-controller="Home" asp-action="Logout">Log Out</a></li>
                     </ul>
                 </div>
             }

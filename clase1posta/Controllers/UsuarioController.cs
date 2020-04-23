@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using clase1posta.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace clase1posta.Controllers
 {
+    [Authorize(Policy = "Administrador")]
     public class UsuarioController : Controller
     {
        
@@ -24,7 +26,8 @@ namespace clase1posta.Controllers
             // GET: Usuario
             public ActionResult Index()
             {
-                return View();
+                var lista = repoUsuario.ObtenerTodos();
+                return View(lista);
             }
 
             // GET: Usuario/Details/5
@@ -68,7 +71,8 @@ namespace clase1posta.Controllers
             // GET: Usuario/Edit/5
             public ActionResult Edit(int id)
             {
-                return View();
+                var persona = repoUsuario.ObtenerPorId(id);
+                return View(persona);
             }
 
             // POST: Usuario/Edit/5
@@ -76,13 +80,20 @@ namespace clase1posta.Controllers
             [ValidateAntiForgeryToken]
             public ActionResult Edit(int id, IFormCollection collection)
             {
+                Usuario u = null;
                 try
                 {
-                    // TODO: Add update logic here
+                    u = repoUsuario.ObtenerPorId(id);
+                    u.Nombre = collection["nombre"];
+                    u.Apellido = collection["Apellido"];
+                    u.Email = collection["Email"];
+                    u.Rol = collection["Rol"];
+                    repoUsuario.Modificacion(u);
+                // TODO: Add update logic here
 
-                    return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
                 }
-                catch
+                catch(Exception ex)
                 {
                     return View();
                 }
@@ -91,7 +102,8 @@ namespace clase1posta.Controllers
             // GET: Usuario/Delete/5
             public ActionResult Delete(int id)
             {
-                return View();
+                var user = repoUsuario.ObtenerPorId(id);
+                return View(user);
             }
 
             // POST: Usuario/Delete/5
@@ -101,8 +113,8 @@ namespace clase1posta.Controllers
             {
                 try
                 {
-                    // TODO: Add delete logic here
-
+                // TODO: Add delete logic here
+                    repoUsuario.Baja(id);
                     return RedirectToAction(nameof(Index));
                 }
                 catch

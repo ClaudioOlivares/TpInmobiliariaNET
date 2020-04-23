@@ -13,7 +13,7 @@ namespace clase1posta.Models
         
         public Propietario Propietario { get; set; }
         public int IdPropietario { get; set; }
-        
+    
         public string Direccion { get; set; }
         public TipoInmueble Tipo { get; set; }
         [Display(Name = "Tipo De Inmueble")]
