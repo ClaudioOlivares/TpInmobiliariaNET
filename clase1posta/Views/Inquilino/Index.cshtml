@@ -3,10 +3,10 @@
 @{
     ViewData["Title"] = "Index";
 }
-    <div>
-        <h2 style="display:inline-block">Inquilinos</h2>
-        <a class="btn-floating btn-large waves-effect waves-light light-blue lighten-2 btn tooltipped" data-position="bottom" data-tooltip="Agregar Inquilino" asp-action="Create" style="margin-top:-20px; margin-left: 25px"><i class="material-icons">add</i></a>
-    </div>
+<div>
+    <h2 style="display:inline-block">Inquilinos</h2>
+    <a class="btn-floating btn-large waves-effect waves-light light-blue lighten-2 btn tooltipped" data-position="bottom" data-tooltip="Agregar Inquilino" asp-action="Create" style="margin-top:-20px; margin-left: 25px"><i class="material-icons">add</i></a>
+</div>
 <br />
 <div class="light-blue lighten-5 contenedor">
     <table class="table highlight centered" id="tabla">
@@ -68,22 +68,22 @@
                         @Html.DisplayFor(modelItem => item.dniGarante)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.idInquilino })
+                        <a href="@Url.Action("Edit", "Inquilino", new { id = item.idInquilino})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Editar" style="border-radius:100px"><i class="tiny material-icons">create</i></a>
+                        <a href="@Url.Action("Delete", "Inquilino", new { id = item.idInquilino})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Eliminar" style="border-radius:100px"><i class="tiny material-icons">delete</i></a>
 
-                        @Html.ActionLink("Delete", "Delete", new { id = item.idInquilino })
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-    <div class="fixed-action-btn ">
-        <a id="menu" class="waves-effect waves-light btn btn-floating light-blue lighten-2"><i class="material-icons">announcement</i></a>
-    </div>
+<div class="fixed-action-btn ">
+    <a id="menu" class="waves-effect waves-light btn btn-floating light-blue lighten-2"><i class="material-icons">announcement</i></a>
+</div>
 
-    <div class="tap-target" id="prueba" data-target="menu">
-        <div class="tap-target-content">
-            <h5 id="prueba2">Title</h5>
-            <p>A bunch of text</p>
-        </div>
+<div class="tap-target " id="colorTap" data-target="menu">
+    <div class="tap-target-content ">
+        <h5 id="tituloAnuncio">Title</h5>
+        <p id="textoAnuncio">A bunch of text</p>
     </div>
+</div>

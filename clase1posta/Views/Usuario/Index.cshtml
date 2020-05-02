@@ -55,9 +55,9 @@
                         @Html.DisplayFor(modelItem => item.Rol)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.IdUsuario }) |
-
-                        @Html.ActionLink("Delete", "Delete", new { id = item.IdUsuario })
+                        <a href="@Url.Action("Edit", "Usuario", new { id = item.IdUsuario})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Editar" style="border-radius:100px"><i class="tiny material-icons">create</i></a>
+                        <a href="@Url.Action("Delete", "Usuario", new { id = item.IdUsuario})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Eliminar" style="border-radius:100px"><i class="tiny material-icons">delete</i></a>
+                       
                     </td>
                 </tr>
             }

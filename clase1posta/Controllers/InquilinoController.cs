@@ -50,11 +50,15 @@ namespace clase1posta.Controllers
             {
                 // TODO: Add insert logic here
                 repositorioInquilino.Alta(p);
+                TempData["mensaje"] = "Exito";
+                TempData["mensaje2"] = "El Inquilino cargado fue dado de alta correctamente";
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                TempData["mensaje"] = "Error";
+                TempData["mensaje2"] = "El Inquilino cargado no fue dado de alta ";
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -83,11 +87,14 @@ namespace clase1posta.Controllers
                 pi.apellidoGarante = collection["apellidoGarante"];
                 pi.dniGarante = collection["dniGarante"];
                 repositorioInquilino.Modificacion(pi);
+                TempData["mensaje"] = "Exito";
+                TempData["mensaje2"] = "El Inquilino fue Modificado correctamente";
                 return RedirectToAction(nameof(Index));
             }
             catch (System.Exception ex)
             {
-                
+                TempData["mensaje"] = "Error";
+                TempData["mensaje2"] = "El Inquilino no pudo ser modificado";
                 return View();
             }
         }
@@ -109,11 +116,15 @@ namespace clase1posta.Controllers
             {
                 // TODO: Add delete logic here
                 repositorioInquilino.Baja(id);
+                TempData["mensaje"] = "Exito";
+                TempData["mensaje2"] = "El Inquilino fue Elimnado correctamente";
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                TempData["mensaje"] = "error";
+                TempData["mensaje2"] = "El Inquilino no pudo ser Eliminado";
+                return RedirectToAction(nameof(Index));
             }
         }
     }

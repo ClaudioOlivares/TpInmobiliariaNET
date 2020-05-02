@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using clase1posta.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 namespace clase1posta.Controllers
 {
+    [Authorize]
     public class ContratoController : Controller
     {
         private readonly IConfiguration configuration;
@@ -58,23 +60,30 @@ namespace clase1posta.Controllers
         public ActionResult Create(Contrato c)
         {
            
-               var a = repoContrato.TraerFechaCercana(c.FechaInicio, c.FechaFinal);
+               var a = repoContrato.TraerFechaCercana(c.FechaInicio, c.FechaFinal,c.IdInmueble);
 
                 // TODO: Add insert logic here
-                var todosLosContratos = repoContrato.ObtenerTodos();
-                foreach (var item in todosLosContratos)
-                {
-                    if((c.FechaInicio >= item.FechaInicio &&  c.FechaInicio <= item.FechaFinal)||(c.FechaFinal <= item.FechaFinal && c.FechaFinal >= item.FechaInicio ))
+                var todosLosContratos = repoContrato.ObtenerTodosPorId(c.IdInmueble);
+                   if (todosLosContratos != null)
                     {
-                        return RedirectToAction(nameof(Index));
+                        foreach (var item in todosLosContratos)
+                        {
+                            if ((c.FechaInicio >= item.FechaInicio && c.FechaInicio <= item.FechaFinal) || (c.FechaFinal <= item.FechaFinal && c.FechaFinal >= item.FechaInicio))
+                            {
+                                TempData["mensaje"] = "Error";
+                                TempData["mensaje2"] = "Inmueble Ocupado para la fecha ingresada";
+                                return RedirectToAction(nameof(Index));
 
+                            }
+                        }
                     }
-                }
                 if (a != null)
                 {
                     if (c.FechaFinal >= a.FechaInicio && c.FechaFinal <= a.FechaFinal)
                     {
                         //meter advertencia aca
+                        TempData["mensaje"] = "Error";
+                        TempData["mensaje2"] = "Inmueble Ocupado para la fecha ingresada";
                         return RedirectToAction(nameof(Index));
                     }
                 }
@@ -101,8 +110,9 @@ namespace clase1posta.Controllers
                     return View();
                 }
 
-                
-                return RedirectToAction(nameof(Index));
+            TempData["mensaje"] = "Exito";
+            TempData["mensaje2"] = "El Contrato cargado fue dado de alta correctamente";
+            return RedirectToAction(nameof(Index));
            
         }
 
@@ -128,7 +138,8 @@ namespace clase1posta.Controllers
             {
                 // TODO: Add update logic here
                 repoContrato.Modificacion(c);
-                TempData["mensaje"] = "contrato modificado correctamente";
+                TempData["mensaje"] = "Exito";
+                TempData["mensaje2"] = "contrato modificado correctamente";
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -137,13 +148,47 @@ namespace clase1posta.Controllers
             }
         }
 
+        public ActionResult Cancelar( int id)
+        {
+            decimal impuesto = 0;
+            var i = 0;
+            var pagos = repoPagos.ObtenerTodosPagosDe(id);
+            foreach (var item in pagos)
+            {
+                if(item.Estado == true)
+                {
+                    i++;
+                }
+                else
+                {
+                    repoPagos.Baja(item.IdPago);
+                }
+            }
+            
+            var contrato = repoContrato.ObtenerPorId(id);
+
+            if( i >= contrato.Duracion /2)
+            {
+                impuesto = contrato.Inmueble.Precio * 2;
+            }
+            else
+            {
+                impuesto = contrato.Inmueble.Precio;
+            }
+            contrato.FechaFinal = DateTime.Now;
+            repoContrato.Modificacion(contrato);
+            TempData["mensaje"] = "Adv";
+            TempData["mensaje2"] = "Contrato Cancelado, Impuesto a Pagar: " + impuesto;
+            return RedirectToAction(nameof(Index));
+        }
+        [Authorize(Policy = "Administrador")]
         // GET: Contrato/Delete/5
         public ActionResult Delete(int id)
         {
             var c = repoContrato.ObtenerPorId(id);
             return View(c);
         }
-
+        [Authorize(Policy = "Administrador")]
         // POST: Contrato/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -153,10 +198,15 @@ namespace clase1posta.Controllers
             {
                 // TODO: Add delete logic here
                 repoContrato.Baja(id);
+                TempData["mensaje"] = "Exito";
+                TempData["mensaje2"] = "contrato Eliminado correctamente";
                 return RedirectToAction(nameof(Index));
+
             }
             catch
             {
+                TempData["mensaje"] = "Error";
+                TempData["mensaje2"] = "contrato no pudo Eliminado correctamente";
                 return View();
             }
         }

@@ -6,64 +6,77 @@
 
 <h2>Cuotas</h2>
 
+<div class="light-blue lighten-5 contenedor">
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Id
-            </th>
-            <th>
-                Contrato
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cuota)
-            </th>
+    <table class="table highlight centered">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Contrato
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cuota)
+                </th>
 
-            <th> Importe </th>
+                <th> Importe </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>Fecha Pago</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdPago)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdContrato)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cuota)
-            </td>
-
-            <td>
-                @ViewBag.Contrato
-
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            @if (item.Estado == false)
+                <th>
+                    @Html.DisplayNameFor(model => model.Estado)
+                </th>
+                <th>Fecha Pago</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
             {
-                <td>
-                    @Html.ActionLink("Pagar", "RealizarPago", "Pago", new { id = item.IdPago }) 
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdPago)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdContrato)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cuota)
+                    </td>
 
-                </td>
-            }
-            else
-            {
-                <td>
-                    @item.FechaPago.ToShortDateString()
-                </td>
-            }
+                    <td>
+                        @ViewBag.Contrato
 
-        </tr>
-}
-    </tbody>
-</table>
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    @if (item.Estado == false)
+                    {
+                    <td>
+                        <a href="@Url.Action("RealizarPago", "Pago", new { id = item.IdPago})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Realizar Pago" style="border-radius:100px"><i class="tiny material-icons">account_balance_wallet</i></a>
+
+                    </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @item.FechaPago.ToShortDateString()
+                        </td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+  </div>
+    <div class="fixed-action-btn ">
+        <a id="menu" class="waves-effect waves-light btn btn-floating light-blue lighten-2"><i class="material-icons">announcement</i></a>
+    </div>
+
+    <div class="tap-target " id="colorTap" data-target="menu">
+        <div class="tap-target-content ">
+            <h5 id="tituloAnuncio">Title</h5>
+            <p id="textoAnuncio">A bunch of text</p>
+        </div>
+    </div>

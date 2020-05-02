@@ -6,85 +6,88 @@
 
 <h2>Modificar Inmueble</h2>
 <br />
-<br />
-<div class="row">
-    <div class="col s12">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="input-field col s12">
-                <div class="form-group">
-                    <i class="material-icons prefix">account_circle</i>
-                    <label asp-for="IdInmueble" class="control-label"></label>
-                    <input asp-for="IdInmueble" class="form-control" readonly />
-                    <span asp-validation-for="IdInmueble" class="text-danger"></span>
+<div class="light-blue lighten-5" style="border-radius: 20px">
+
+    <div class="row">
+        <div class="col s12">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="input-field col s12">
+                    <div class="form-group">
+                        <i class="material-icons prefix">account_circle</i>
+                        <label asp-for="IdInmueble" class="control-label"></label>
+                        <input asp-for="IdInmueble" class="form-control" readonly />
+                        <span asp-validation-for="IdInmueble" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
-          
-            <div class="input-field col s6">
 
-                <select class="form-control" name="IdPropietario">
-                    @foreach (var item in (IList<Propietario>)ViewBag.Propietarios)
-                    {
-                        <option value="@item.idPropietario">@(item.idPropietario + " " + item.nombre + " " + item.apellido)</option>
-                    }
-                </select>
-                <span asp-validation-for="IdPropietario" class="text-danger"></span>
-            </div>
-            <div class="input-field col s6">
+                <div class="input-field col s6">
 
-                <select class="form-control" name="IdTipo">
-                    @foreach (var item2 in (IList<TipoInmueble>)ViewBag.Tipos)
-                    {
-                        <option value="@item2.idTípoInmueble">@(item2.idTípoInmueble + " " + item2.nombreTipo)</option>
-                    }
-                </select>
-                <span asp-validation-for="IdTipo" class="text-danger"></span>
-            </div>
+                    <select class="form-control" name="IdPropietario">
+                        @foreach (var item in (IList<Propietario>)ViewBag.Propietarios)
+                        {
+                            <option value="@item.idPropietario">@(item.idPropietario + " " + item.nombre + " " + item.apellido)</option>
+                        }
+                    </select>
+                    <span asp-validation-for="IdPropietario" class="text-danger"></span>
+                </div>
+                <div class="input-field col s6">
 
-            <div class="input-field col s12">
-                <i class="material-icons prefix">map</i>
-                <label asp-for="Direccion" class="control-label"></label>
-                <input asp-for="Direccion" class="form-control" />
-                <span asp-validation-for="Direccion" class="text-danger"></span>
-            </div>
+                    <select class="form-control" name="IdTipo">
+                        @foreach (var item2 in (IList<TipoInmueble>)ViewBag.Tipos)
+                        {
+                            <option value="@item2.idTípoInmueble">@(item2.idTípoInmueble + " " + item2.nombreTipo)</option>
+                        }
+                    </select>
+                    <span asp-validation-for="IdTipo" class="text-danger"></span>
+                </div>
 
-            <div class="input-field col s6">
-                <i class="material-icons prefix">border_all</i>
-                <label asp-for="CantAmbientes" class="control-label"></label>
-                <input asp-for="CantAmbientes" class="form-control" />
-                <span asp-validation-for="CantAmbientes" class="text-danger"></span>
-            </div>
-            <div class="input-field col s6">
-                <i class="material-icons prefix">attach_money</i>
-                <label asp-for="Precio" class="control-label"></label>
-                <input asp-for="Precio" class="form-control" />
-                <span asp-validation-for="Precio" class="text-danger"></span>
-            </div>
-            <br />
-            <p class="col s12">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">map</i>
+                    <label asp-for="Direccion" class="control-label"></label>
+                    <input asp-for="Direccion" class="form-control" />
+                    <span asp-validation-for="Direccion" class="text-danger"></span>
+                </div>
 
-                <label>
-                    <input type="checkbox" asp-for="Estado" />
-                    <span>@Html.DisplayNameFor(model => model.Estado)</span>
-                </label>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">border_all</i>
+                    <label asp-for="CantAmbientes" class="control-label"></label>
+                    <input asp-for="CantAmbientes" class="form-control" />
+                    <span asp-validation-for="CantAmbientes" class="text-danger"></span>
+                </div>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">attach_money</i>
+                    <label asp-for="Precio" class="control-label"></label>
+                    <input asp-for="Precio" class="form-control" />
+                    <span asp-validation-for="Precio" class="text-danger"></span>
+                </div>
+                <br />
+                <p class="col s12">
 
-            </p>
-            <br />
-            <div class="input-field col s12">
-                <button class=" btn-large waves-effect waves-light  light-blue lighten-1" type="submit" name="action">
-                    Enviar
-                    <i class="material-icons right">send</i>
-                </button>
-            </div>
-        </form>
+                    <label>
+                        <input type="checkbox" asp-for="Estado" />
+                        <span>@Html.DisplayNameFor(model => model.Estado)</span>
+                    </label>
+
+                </p>
+                <br />
+                <div class="input-field col s12">
+                    <button class=" btn-large waves-effect waves-light  light-blue lighten-1" type="submit" name="action">
+                        Enviar
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-<br />
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    </div>
+    <br />
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

@@ -54,6 +54,8 @@ namespace clase1posta.Controllers
             {
                 // TODO: Add insert logic here
                 repositorioInmueble.Alta(i);
+                TempData["mensaje"] = "Exito";
+                TempData["mensaje2"] = "El inmueble cargado fue dado de alta correctamente";
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception ex)
@@ -80,6 +82,8 @@ namespace clase1posta.Controllers
             {
                 // TODO: Add update logic here
                 repositorioInmueble.Modificacion(entidad);
+                TempData["mensaje"] = "Exito";
+                TempData["mensaje2"] = "El inmueble fue Modificado correctamente";
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception ex)
@@ -92,6 +96,8 @@ namespace clase1posta.Controllers
         [Authorize (Policy = "Administrador")]
         public ActionResult Delete(int id)
         {
+            TempData["mensaje"] = "Exito";
+            TempData["mensaje2"] = "El inmueble fue Modificado correctamente";
             var i = repositorioInmueble.ObtenerPorId(id);
             return View(i);
         }
@@ -105,11 +111,15 @@ namespace clase1posta.Controllers
             {
                 // TODO: Add delete logic here
                 repositorioInmueble.Baja(id);
+                TempData["mensaje"] = "Exito";
+                TempData["mensaje2"] = "El inmueble fue Eliminado correctamente";
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                TempData["mensaje"] = "Error";
+                TempData["mensaje2"] = "El inmueble no pudo ser Eliminado";
+                return RedirectToAction(nameof(Index));
             }
         }
     }

@@ -144,7 +144,22 @@ namespace clase1posta.Models
         }
 
 
-
+        public int Baja(int id)
+        {
+            int res = -1;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = $"DELETE FROM Pagos WHERE IdPago = {id}";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    res = command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+            return res;
+        }
 
 
 

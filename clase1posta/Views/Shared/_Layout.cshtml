@@ -64,84 +64,153 @@
 </head>
 
 <body>
+
+
+
+    <nav class=" light-blue lighten-2">
+        <div class="nav-wrapper">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="brand-logo text-white">CANDACE</a>
+            }
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a asp-area="" asp-controller="Propietarios" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">accessibility</i>Propietarios</a></li>
+                    <li><a asp-area="" asp-controller="Inquilino" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">account_box</i>Inquilinos</a></li>
+                    <li><a asp-area="" asp-controller="Inmueble" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">weekend</i>Inmuebles</a></li>
+                    <li><a asp-area="" asp-controller="Contrato" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">assignment</i>Contratos</a></li>
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <li><a asp-area="" asp-controller="Usuario" asp-action="Index"><i class="material-icons left">star</i>Usuarios</a></li>
+                    }
+                    <li style="float:right"  class="waves-effect waves-light"><a id="abrir"><i class="large material-icons left">menu</i></a></li>
+
+                }
+            </ul>
+        </div>
+    </nav>
     
 
+    <ul id="slide-out" class="sidenav">
+        <li>
+            <div class="user-view">
+                <div class="background light-blue lighten-5">
+                    <img src="~/images/oficce2.jpg">
+                </div>
+                <a href="#user"><img class="circle" src="~/images/User.jpg"></a>
+                <a href="#name"><span class="white-text name">John Doe</span></a>
+                <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+            </div>
+        </li>
+
+        <li><a class="waves-effect" href="#!">Mis Datos</a></li>
+        <li><a class="waves-effect" href="#!">Cambiar Contraseña</a></li>
+        <li><div class="divider"></div></li>
+        <li><a class="waves-effect" asp-area="" asp-controller="Home" asp-action="Logout">Log Out</a></li>
+    </ul>
    
-  <nav class=" light-blue lighten-2">
-      <div class="nav-wrapper">
-          @if (User.Identity.IsAuthenticated)
-          {
-              <a asp-area="" asp-controller="Home" asp-action="Index" class="brand-logo text-white">CANDACE</a>
-          }
-              <ul id="nav-mobile" class="right hide-on-med-and-down">
-                  @if (User.Identity.IsAuthenticated)
-                  {
-                      <li><a asp-area="" asp-controller="Propietarios" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">accessibility</i>Propietarios</a></li>
-                      <li><a asp-area="" asp-controller="Inquilino" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">account_box</i>Inquilinos</a></li>
-                      <li><a asp-area="" asp-controller="Inmueble" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">weekend</i>Inmuebles</a></li>
-                      <li><a asp-area="" asp-controller="Contrato" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">assignment</i>Contratos</a></li>
-                      @if (User.IsInRole("Administrador"))
-                      {
-                          <li><a asp-area="" asp-controller="Usuario" asp-action="Index"><i class="material-icons left">star</i>Usuarios</a></li>
-                      }
-                      <li style="float:right"><a asp-area="" asp-controller="Home" asp-action="Logout">Log Out</a></li>
-                  }
-              </ul>
-          </div>
-        </nav>
-       
-        
 
 
-        <partial name="_CookieConsentPartial" />
 
-        <div class="container body-content ">
-            @RenderBody()
-            <hr />
-            <footer class="footer">
-                <p class="2">&copy; 2020 - Claudio Exequiel Olivares</p>
-            </footer>
-        </div>
 
-        <environment include="Development">
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $('.datepicker').datepicker();
-                    $('select').formSelect();
-                    $('.tooltipped').tooltip();
+    <partial name="_CookieConsentPartial" />
 
-                });
-            </script>
-            @if (TempData["mensaje"] != null)
-            {
-                <script>
+    <div class="container body-content ">
+        @RenderBody()
+        <hr />
+        <footer class="footer">
+            <p class="2">&copy; 2020 - Claudio Exequiel Olivares</p>
+        </footer>
+    </div>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.datepicker').datepicker();
+                $('select').formSelect();
+                $('.tooltipped').tooltip();
+                $('.sidenav').sidenav();
+                
+            });
+
+        </script>
+
+        <script>
+            $("#abrir").click(function () {
+
+                  $('.sidenav').sidenav('open');
+            });
+
+        </script>
+        @if (TempData["mensaje"] != null)
+        {
+            <script>
                     document.addEventListener('DOMContentLoaded', function () {
-                        document.body.style.backgroundColor = "#F67376";
-                        document.getElementById("prueba2").innerHTML = "PRUEBAAAA"
+                        var mensaje = '@TempData["mensaje2"]';
+                        var titulo = '@TempData["mensaje"]';
+                        var color = document.getElementById("colorTap");
+                        if (titulo == "Error")
+                        {
+
+                            document.getElementById("tituloAnuncio").innerHTML = titulo;
+                            color.classList.add("red");
+                            color.classList.add("lighten-1")
+                            color.classList.remove("green");
+                            color.classList.remove("yellow");
+
+                        }
+                        else if (titulo == "Exito")
+                        {
+                            document.getElementById("tituloAnuncio").innerHTML = titulo;
+                            color.classList.add("green");
+                            color.classList.add("lighten-1")
+                            color.classList.remove("red");
+                            color.classList.remove("yellow");
+
+
+                        }
+                        else if (titulo == "Adv")
+                        {
+
+                            document.getElementById("tituloAnuncio").innerHTML = titulo;
+                            color.classList.add("yellow");
+                            color.classList.add("lighten-1")
+                            color.classList.remove("red");
+                             color.classList.remove("green");
+                         }
+
+
+
+                        document.getElementById("textoAnuncio").innerHTML = mensaje;
+
                         var elemsTap = document.querySelector('.tap-target');
                         var instancesTap = M.TapTarget.init(elemsTap);
                         instancesTap.open();
+                        titulo = "";
+                        mensaje = "";
+                        TempData["mensaje"] = null;
                     });
 
 
-                </script>
-                TempData["mensaje"] = null;
-            }
-        </environment>
-        <environment exclude="Development">
-            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                    asp-fallback-test="window.jQuery"
-                    crossorigin="anonymous"
-                    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
             </script>
-          
-            
 
-        </environment>
+        }
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+        </script>
 
-        @RenderSection("Scripts", required: false)
-    </body>
+
+
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
 </html>

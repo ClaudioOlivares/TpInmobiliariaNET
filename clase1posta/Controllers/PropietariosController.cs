@@ -24,7 +24,7 @@ namespace clase1posta.Controllers
         // GET: Propietarios
         public ActionResult Index()
         {
-             var lista = repositorioPropietario.ObtenerTodos();
+            var lista = repositorioPropietario.ObtenerTodos();
             return View(lista);
 
         }
@@ -51,12 +51,13 @@ namespace clase1posta.Controllers
             {
                 // TODO: Add insert logic here
                 repositorioPropietario.Alta(p);
-
+                TempData["mensaje"] = "Exito";
+                TempData["mensaje2"] = "El Propietario cargado fue dado de alta correctamente";
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -83,11 +84,15 @@ namespace clase1posta.Controllers
                 p.telefono = collection["telefono"];
                 p.email = collection["email"];
                 repositorioPropietario.Modificacion(p);
+                TempData["mensaje"] = "Exito";
+                TempData["mensaje2"] = "El Propietario cargado fue Modificado correctamente";
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                TempData["mensaje"] = "Error";
+                TempData["mensaje2"] = "El Propietario no pudo ser Modificado";
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -108,13 +113,17 @@ namespace clase1posta.Controllers
             {
                 // TODO: Add delete logic here
                 repositorioPropietario.Baja(id);
+                TempData["mensaje"] = "Exito";
+                TempData["mensaje2"] = "El Propietario fue Eliminado correctamente";
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
-            }
+                TempData["mensaje"] = "Error";
+                TempData["mensaje2"] = "El Propietario no pudo ser Eliminado correctamente";
+                return RedirectToAction(nameof(Index));
 
+            }
         }
     }
 }

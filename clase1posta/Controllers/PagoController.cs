@@ -44,7 +44,8 @@ namespace clase1posta.Controllers
                 p.FechaPago = DateTime.Now;
                 p.Estado = true;
                 repoPagos.Pagar(p);
-
+                TempData["mensaje"] = "Exito";
+                TempData["mensaje2"] = "Se ha registrado el Pago correctamente";
                 return RedirectToAction("Index","Contrato");
             }
             catch(Exception ex)

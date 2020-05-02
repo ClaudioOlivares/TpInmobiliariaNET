@@ -68,6 +68,59 @@ namespace clase1posta.Models
             return res;
         }
 
+        public IList<Contrato> ObtenerTodosPorId(int id)
+        {
+            IList<Contrato> res = new List<Contrato>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = $"SELECT IdContrato,c.IdInquilino,c.IdInmueble,Duracion,FechaInicio,FechaFinal," +
+                     " i.Dni, t.Direccion, t.Precio" +
+                    " FROM Contratos c INNER JOIN Inquilinos i ON i.IdInquilino = c.IdInquilino  " +
+                    " INNER JOIN Inmuebles t ON c.IdInmueble = t.IdInmueble AND c.IdInmueble = @id";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+
+
+                        Contrato c = new Contrato
+                        {
+                            IdContrato = reader.GetInt32(0),
+                            IdInquilino = reader.GetInt32(1),
+                            IdInmueble = reader.GetInt32(2),
+                            Duracion = reader.GetInt32(3),
+                            FechaInicio = reader.GetDateTime(4),
+                            FechaFinal = reader.GetDateTime(5),
+                            Inmueble = new Inmueble
+                            {
+                                Direccion = reader.GetString(7),
+                                Precio = reader.GetDecimal(8),
+                            },
+                            Inquilino = new Inquilino
+                            {
+                                dni = reader.GetString(6),
+                            }
+
+
+                        };
+                        res.Add(c);
+                    }
+                    connection.Close();
+                }
+            }
+            return res;
+        }
+
+
+
+
+
+
         public int Alta(Contrato c)
         {
             int res = -1;
@@ -186,7 +239,7 @@ namespace clase1posta.Models
         }
 
 
-        public Contrato TraerFechaCercana(DateTime fecha, DateTime fechaCierre)
+        public Contrato TraerFechaCercana(DateTime fecha, DateTime fechaCierre, int id)
         {
             Contrato res = null;
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -195,10 +248,11 @@ namespace clase1posta.Models
                      " i.Dni, t.Direccion, t.Precio" +
                     " FROM Contratos c INNER JOIN Inquilinos i ON i.IdInquilino = c.IdInquilino  " +
                     " INNER JOIN Inmuebles t ON c.IdInmueble = t.IdInmueble" +
-                    " WHERE c.FechaFinal > @fecha AND @fechaCierre > FechaInicio ";
+                    " WHERE c.FechaFinal > @fecha AND @fechaCierre > FechaInicio And c.IdInmueble = @id";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
                     command.Parameters.Add("@fecha", SqlDbType.Date).Value = fecha;
                     command.Parameters.Add("@fechaCierre", SqlDbType.Date).Value = fechaCierre;
                     command.CommandType = CommandType.Text;
