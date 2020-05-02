@@ -4,48 +4,70 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>Alta Propietario</h2>
+<br />
+<br />
 
-<h4>Propietario</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
-            <div class="form-group">
-                <label asp-for="nombre" class="control-label"></label>
-                <input asp-for="nombre" class="form-control" />
-                <span asp-validation-for="nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="apellido" class="control-label"></label>
-                <input asp-for="apellido" class="form-control" />
-                <span asp-validation-for="apellido" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dni" class="control-label"></label>
-                <input asp-for="dni" class="form-control" />
-                <span asp-validation-for="dni" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="telefono" class="control-label"></label>
-                <input asp-for="telefono" class="form-control" />
-                <span asp-validation-for="telefono" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="email" class="control-label"></label>
-                <input asp-for="email" class="form-control" />
-                <span asp-validation-for="email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+<div class="light-blue lighten-5" style="border-radius: 20px">
+
+    <div class="row">
+        <div class="col s12">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">account_circle</i>
+                    <label asp-for="nombre" class="control-label"></label>
+                    <input asp-for="nombre" class="form-control" required />
+                    <span asp-validation-for="nombre" class="text-danger"></span>
+                </div>
+
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">account_circle</i>
+                    <label asp-for="apellido" class="control-label"></label>
+                    <input asp-for="apellido" class="form-control" required />
+                    <span asp-validation-for="apellido" class="text-danger"></span>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">assignment_ind</i>
+                    <label asp-for="dni" class="control-label"></label>
+                    <input asp-for="dni" class="form-control" required />
+                    <span asp-validation-for="dni" class="text-danger"></span>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">phone</i>
+                    <label asp-for="telefono" class="control-label"></label>
+                    <input asp-for="telefono" class="form-control" required />
+                    <span asp-validation-for="telefono" class="text-danger"></span>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix ">email</i>
+                    <label asp-for="email" class="control-label"></label>
+                    <input class='validate' type='email' asp-for="email" required />
+                    <span asp-validation-for="email" class="text-danger"></span>
+                </div>
+
+                <div class="input-field col s12">
+                    <button class=" btn-large waves-effect waves-light  light-blue lighten-1" type="submit" name="action">
+                        Enviar
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+ </div>
+    <br />
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+    <br />
+
+
+
 

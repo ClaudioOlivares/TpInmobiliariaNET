@@ -4,68 +4,91 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
 
-<h4>Inmueble</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           
-            <div class="form-group">
-                <label class="control-label">Propietario</label>
-                <select class="form-control" name="IdPropietario">
-                    @foreach (var item in (IList<Propietario>)ViewBag.Propietarios)
-                    {
-                        <option value="@item.idPropietario">@(item.idPropietario + " " + item.nombre + " " + item.apellido)</option>
-                    }
-                </select>
-                <span asp-validation-for="IdPropietario" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Direccion" class="control-label"></label>
-                <input asp-for="Direccion" class="form-control" />
-                <span asp-validation-for="Direccion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">IdTipo</label>
-                <select class="form-control" name="IdTipo">
-                    @foreach (var item2 in (IList<TipoInmueble>)ViewBag.Tipos)
-                    {
-                        <option value="@item2.idTípoInmueble">@(item2.idTípoInmueble + " " +item2.nombreTipo)</option>
-                    }
-                </select>
-                <span asp-validation-for="IdTipo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CantAmbientes" class="control-label"></label>
-                <input asp-for="CantAmbientes" class="form-control" />
-                <span asp-validation-for="CantAmbientes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Precio" class="control-label"></label>
-                <input asp-for="Precio" class="form-control" />
-                <span asp-validation-for="Precio" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
-                    </label>
+
+<h2>Alta Inmueble</h2>
+<br />
+<br />
+<div class="light-blue lighten-5" style="border-radius: 20px">
+
+    <div class="row ">
+        <div class="col s12 ">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="input-field col s6">
+
+                    <select name="IdPropietario" required>
+                        <option value="" disabled selected>Elegir Propietario</option>
+                        @foreach (var item in (IList<Propietario>)ViewBag.Propietarios)
+                        {
+                            <option value="@item.idPropietario">@(item.idPropietario + " " + item.nombre + " " + item.apellido)</option>
+                        }
+                    </select>
+                    <span asp-validation-for="IdPropietario" class="text-danger"></span>
                 </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+
+                <div class=" input-field col s6">
+
+                    <select class="" name="IdTipo" required>
+
+
+                        <option value="" disabled selected>Elegir Tipo </option>
+                        @foreach (var item2 in (IList<TipoInmueble>)ViewBag.Tipos)
+                        {
+                            <option value="@item2.idTípoInmueble">@(item2.idTípoInmueble + " " + item2.nombreTipo)</option>
+                        }
+                    </select>
+                    <span asp-validation-for="IdTipo" class="text-danger"></span>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">map</i>
+                    <label asp-for="Direccion" class="control-label"></label>
+                    <input asp-for="Direccion" class="form-control" required />
+                    <span asp-validation-for="Direccion" class="text-danger"></span>
+                </div>
+
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">border_all</i>
+                    <label asp-for="CantAmbientes" class="control-label"></label>
+                    <input asp-for="CantAmbientes" class="form-control" required />
+                    <span asp-validation-for="CantAmbientes" class="text-danger"></span>
+                </div>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">attach_money</i>
+                    <label asp-for="Precio" class="control-label"></label>
+                    <input asp-for="Precio" class="form-control" required />
+                    <span asp-validation-for="Precio" class="text-danger"></span>
+                </div>
+                <br />
+                <p class="col s12">
+
+                    <label>
+                        <input type="checkbox" asp-for="Estado" required />
+                        <span>@Html.DisplayNameFor(model => model.Estado)</span>
+                    </label>
+
+                </p>
+
+                <br />
+
+                <div class="input-field col s12">
+                    <button class=" btn-large waves-effect waves-light  light-blue lighten-1" type="submit" name="action">
+                        Enviar
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-
+<br />
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+
+<script>
+
+</script>

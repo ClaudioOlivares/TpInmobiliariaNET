@@ -1,0 +1,74 @@
+﻿@model clase1posta.Models.Contrato
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Modificar Contrato</h2>
+<br />
+<br />
+<div class="row">
+    <div class="col s12">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="input-field col s12">
+                <i class="material-icons prefix">account_circle</i>
+                <label asp-for="IdContrato" class="control-label"></label>
+                <input asp-for="IdContrato" class="form-control" readonly />
+                <span asp-validation-for="IdContrato" class="text-danger"></span>
+            </div>
+            <div class="input-field col s6">
+
+                <select class="form-control" name="IdInquilino" required>
+                   
+                    @foreach (var item2 in (IList<Inquilino>)ViewBag.Inquilinos)
+                    {
+                        <option value="@item2.idInquilino">@(item2.nombre + " " + item2.apellido)</option>
+                    }
+                </select>
+                <span asp-validation-for="IdInquilino" class="text-danger"></span>
+            </div>
+            <div class="input-field col s6">
+
+                <select class="form-control" name="IdInmueble" required>
+                    
+                    @foreach (var item2 in (IList<Inmueble>)ViewBag.Inmuebles)
+                    {
+                        <option value="@item2.IdInmueble">@("Direccion: " + item2.Direccion)</option>
+                    }
+                </select>
+                <span asp-validation-for="IdInmueble" class="text-danger"></span>
+            </div>
+            <div class="nput-field col s12">
+                <i class="material-icons prefix">hourglass_empty</i>
+                <label asp-for="Duracion" class="control-label"></label>
+                <input asp-for="Duracion" class="form-control" required />
+                <span asp-validation-for="Duracion" class="text-danger"></span>
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">date_range</i>
+                <label asp-for="FechaInicio" class="control-label"></label>
+                <input type="text" asp-for="FechaInicio" class="datepicker" required />
+                <span asp-validation-for="FechaInicio" class="text-danger"></span>
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">date_range</i>
+                <label asp-for="FechaFinal" class="control-label"></label>
+                <input type="text" asp-for="FechaFinal" class="datepicker" required />
+                <span asp-validation-for="FechaFinal" class="text-danger"></span>
+            </div>
+            <div class="input-field col s12">
+                <button class=" btn-large waves-effect waves-light  light-blue lighten-1" type="submit" name="action">
+                    Enviar
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

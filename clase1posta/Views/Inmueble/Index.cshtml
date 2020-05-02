@@ -3,97 +3,110 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h2>Index</h2>
-<link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table" id="tabla">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdInmueble)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdPropietario)
-            </th>
-            <th>
-                Nombre Propietario
-            </th>
-            <th>
-                Apellido Propietario
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Direccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdTipo)
-            </th>
-            <th>
-                Tipo
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CantAmbientes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Precio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <div>
+        <h2 style="display:inline-block">Inmuebles</h2>
+        <a class="btn-floating btn-large waves-effect waves-light light-blue lighten-2 btn tooltipped" data-position="bottom" data-tooltip="Agregar Inquilino" asp-action="Create" style="margin-top:-20px; margin-left: 25px"><i class="material-icons">add</i></a>
+    </div>
+<br />
+<div class="light-blue lighten-5 contenedor">
+    <table class="table highlight centered" id="tabla">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdInmueble)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdPropietario)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Propietario.nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Propietario.apellido)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Direccion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdTipo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tipo.nombreTipo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CantAmbientes)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Precio)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.IdInmueble }) |
-
-                    @Html.ActionLink("Delete", "Delete", new { id = item.IdInmueble })
-                </td>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Id Prop
+                </th>
+                <th>
+                    Nombre Prop
+                </th>
+                <th>
+                    Apellido Prop
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Direccion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdTipo)
+                </th>
+                <th>
+                    Tipo
+                </th>
+                <th>
+                    Ambientes
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Precio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Estado)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
-@section scripts
-{
-    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#tabla').DataTable();
-        });</script>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdInmueble)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdPropietario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Propietario.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Propietario.apellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Direccion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdTipo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tipo.nombreTipo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CantAmbientes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Precio)
+                    </td>
 
-}
+                    @if (item.Estado == true)
+                    {
+                        <td>
+                            Listado
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            No Listado
+                        </td>
+                    }
+
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.IdInmueble }) |
+
+                        @Html.ActionLink("Delete", "Delete", new { id = item.IdInmueble })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="fixed-action-btn ">
+    <a id="menu" class="waves-effect waves-light btn btn-floating light-blue lighten-2"><i class="material-icons">announcement</i></a>
+</div>
+
+<div class="tap-target" id="prueba" data-target="menu">
+    <div class="tap-target-content">
+        <h5 id="prueba2">Title</h5>
+        <p>A bunch of text</p>
+    </div>
+</div>

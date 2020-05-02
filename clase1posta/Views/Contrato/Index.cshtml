@@ -1,0 +1,112 @@
+﻿@model IEnumerable<clase1posta.Models.Contrato>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    
+</style>
+
+
+
+
+<div >
+    <h2 style="display:inline-block">Contratos</h2>
+    <a class="btn-floating btn-large waves-effect waves-light light-blue lighten-2 btn tooltipped" data-position="bottom" data-tooltip="Agregar Contrato" asp-action="Create" style="margin-top:-20px; margin-left: 25px"><i class="material-icons">add</i></a>
+
+    
+</div>
+<br />
+
+<div class="light-blue lighten-5 contenedor" style="">
+    <table class="table highlight centered" style="">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    IdInquilino
+                </th>
+                <th>
+                    DniInquilino
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdInmueble)
+                </th>
+                <th>
+                    Direccion
+                </th>
+                <th>
+                    Precio
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Duracion)
+                </th>
+                <th>
+                    Inicio
+                </th>
+                <th>
+                    Fin
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdContrato)
+
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdInquilino)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Inquilino.dni)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdInmueble)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Inmueble.Direccion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Inmueble.Precio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Duracion)
+                    </td>
+                    <td>
+                        @item.FechaFinal.ToShortDateString()
+
+                    </td>
+                    <td>
+                        @item.FechaFinal.ToShortDateString()
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.IdContrato }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.IdContrato })
+                        @Html.ActionLink("p", "MostrarPagos", "Pago", new { id = item.IdContrato })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="fixed-action-btn ">
+    <a id="menu" class="waves-effect waves-light btn btn-floating light-blue lighten-2"><i class="material-icons">announcement</i></a>
+</div>
+
+<div class="tap-target" id="prueba" data-target="menu">
+    <div class="tap-target-content">
+        <h5 id="prueba2">Title</h5>
+        <p>A bunch of text</p>
+    </div>
+</div>
+

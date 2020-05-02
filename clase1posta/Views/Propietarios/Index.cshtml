@@ -3,72 +3,80 @@
 @{
     ViewData["Title"] = "Index";
 }
-    <link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
-<h2>Index</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table" id="tabla">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.idPropietario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.apellido)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.dni)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.email)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+
+
+<link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<div>
+    <h2 style="display:inline-block">Propietarios</h2>
+    <a class="btn-floating btn-large waves-effect waves-light light-blue lighten-2 btn tooltipped" data-position="bottom" data-tooltip="Agregar Propietario" asp-action="Create" style="margin-top:-20px; margin-left: 25px"><i class="material-icons">add</i></a>
+</div>
+<br />
+<div class="light-blue lighten-5 contenedor">
+    <table class="table highlight centered" id="tabla">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.idPropietario)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.apellido)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.dni)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.telefono)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.email)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.idPropietario }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.idPropietario }) |
-                    @Html.ActionLink("Delete", "Delete", new {id=item.idPropietario })
-                </td>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Apelldio
+                </th>
+                <th>
+                    Dni
+                </th>
+                <th>
+                    Telefono
+                </th>
+                <th>
+                    Email
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
-@section scripts
-{
-    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script>$(document).ready( function () {
-        $('#tabla').DataTable();
-} );</script>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.idPropietario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.apellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dni)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.telefono)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.email)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.idPropietario })
 
-}
+                        @Html.ActionLink("Delete", "Delete", new { id = item.idPropietario })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+    <div class="fixed-action-btn ">
+        <a id="menu" class="waves-effect waves-light btn btn-floating light-blue lighten-2"><i class="material-icons">announcement</i></a>
+    </div>
+
+    <div class="tap-target" id="prueba" data-target="menu">
+        <div class="tap-target-content">
+            <h5 id="prueba2">Title</h5>
+            <p>A bunch of text</p>
+        </div>
+    </div>
+

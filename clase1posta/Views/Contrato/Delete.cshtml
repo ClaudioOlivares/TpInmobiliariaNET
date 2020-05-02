@@ -1,0 +1,35 @@
+﻿@model clase1posta.Models.Contrato
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Eliminar Contrato</h2>
+<br />
+
+<h3>Esta seguro que desea eliminar esto?</h3>
+<br />
+<div>
+
+    <ul class="collection col s6 ">
+        <li class="collection-item light-blue lighten-5">  @Html.DisplayNameFor(model => model.IdContrato): @Html.DisplayFor(model => model.IdContrato)</li>
+        <li class="collection-item">  @Html.DisplayNameFor(model => model.IdInquilino): @Html.DisplayFor(model => model.IdInquilino)</li>
+        <li class="collection-item light-blue lighten-5">  @Html.DisplayNameFor(model => model.IdInmueble): @Html.DisplayFor(model => model.IdInmueble)</li>
+        <li class="collection-item">  @Html.DisplayNameFor(model => model.Duracion): @Html.DisplayFor(model => model.Duracion)</li>
+        <li class="collection-item light-blue lighten-5">  @Html.DisplayNameFor(model => model.FechaInicio): @Html.DisplayFor(model => model.FechaInicio)</li>
+        <li class="collection-item">  @Html.DisplayNameFor(model => model.FechaFinal): @Html.DisplayFor(model => model.FechaFinal)</li>
+    </ul>
+
+    <form asp-action="Delete">
+        <div class="input-field col s12">
+            <button class=" btn-large waves-effect waves-light  light-blue lighten-1" type="submit" name="action">
+                Eliminar
+                <i class="material-icons right">delete_forever</i>
+            </button>
+        </div>
+        <br />
+        <br />
+        <a asp-action="Index">Back to List</a>
+    </form>
+    <br />
+</div>

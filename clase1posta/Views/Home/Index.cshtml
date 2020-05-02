@@ -2,37 +2,154 @@
     ViewData["Title"] = "Home Page";
 }
 @model clase1posta.Models.LoginView
-<hr />
+<style>
+    body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+       background-image: linear-gradient(to right top, #4fc2f8, #67cdf8, #7ed7f9, #95e1f9, #acebfb, #aef0fc, #b2f6fc, #b6fbfb, #abfdf2, #a5ffe5, #a7ffd5, #afffc1);
+  
+      
+       
+    }
+
+    main {
+        flex: 1 0 auto;
+    }
+
+
+    .input-field input[type=date]:focus + label,
+    .input-field input[type=text]:focus + label,
+    .input-field input[type=email]:focus + label,
+    .input-field input[type=password]:focus + label {
+        color: #e91e63;
+    }
+
+    .input-field input[type=date]:focus,
+    .input-field input[type=text]:focus,
+    .input-field input[type=email]:focus,
+    .input-field input[type=password]:focus {
+        border-bottom: 2px solid #e91e63;
+        box-shadow: none;
+    }
+</style>
+
 @if (!User.Identity.IsAuthenticated)
 {
+    <div class="section"></div>
+    <main>
+        <center>
+            <img class="responsive-img" style="width: 250px;" src="~/images/gif2.gif" />
+            <div class="section"></div>
 
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Login">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Email" class="control-label"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
+            <h5 class=" light-blue-text  text-darken-1">Please, login into your account</h5>
+            <div class="section"></div>
+
+            <div class="container">
+                <div class="z-depth-1  light-blue lighten-5 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+                    <form class="col s12" asp-action="Login">
+                        <div class='row'>
+                            <div class='col s12'>
+                            </div>
+                        </div>
+
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                <input class='validate' type='email' name='Email' id='Email' required asp-for="Email" />
+                                <label asp-for="Email">Enter your email</label>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                <input class='validate' type='password' name='Clave' id='Clave' required asp-for="Clave" />
+                                <label asp-for="Clave">Enter your password</label>
+                                <span asp-validation-for="Clave" class="text-danger"></span>
+                            </div>
+                            <label style='float: right;'>
+                                <a class='light-blue-text text-darken-3' href='#!'><b>Forgot Password?</b></a>
+                            </label>
+                        </div>
+
+                        <br />
+                        <center>
+                            <div class='row'>
+                                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect  light-blue lighten-1'>Login</button>
+                            </div>
+                        </center>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Clave" class="control-label"></label>
-                    <input asp-for="Clave" class="form-control" />
-                    <span asp-validation-for="Clave" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
-    </div>
+            </div>
+
+        </center>
+
+        <div class="section"></div>
+        <div class="section"></div>
+    </main>
+
 
 }
 
 else
 {
+    <!--  SLIDER -->
 
-<h1>
-    HOLA  @User.Identity.Name
-</h1>
+
+    <div>
+        <div class="slider">
+            <ul class="slides" style="">
+                <li>
+                    <img src="~/images/casa1.jpg"> <!-- random image -->
+                    <div class="caption center-align">
+                        <h2>This is our big Tagline!</h2>
+                        <h5 class="light grey-text text-lighten-3 hide-on-small-only">Here's our small slogan.</h5>
+                    </div>
+                </li>
+                <li>
+                    <img src="~/images/casa2.jpeg"> <!-- random image -->
+                    <div class="caption left-align">
+                        <h2>Left Aligned Caption</h2>
+                        <h5 class="light grey-text text-lighten-3 hide-on-small-only">Here's our small slogan.</h5>
+                    </div>
+                </li>
+                <li>
+                    <img src="~/images/casa3.jpg"> <!-- random image -->
+                    <div class="caption right-align">
+                        <h2>Right Aligned Caption</h2>
+                        <h5 class="light grey-text text-lighten-3 hide-on-small-only">Here's our small slogan.</h5>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+
+
+    <a class="weatherwidget-io" href="https://forecast7.com/es/n33d30n66d33/san-luis-province/" data-label_1="SAN LUIS" data-label_2="Clima" data-theme="sky" data-basecolor="rgba(81, 209, 252, 0.84)">SAN LUIS Clima</a>
+    <script>
+        !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
+    </script>
+
+    <script>
+        // SLIDER
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.slider');
+            var instances = M.Slider.init(elems, {
+
+                indicators: false,
+                height: 250,
+                transition: 500,
+                interval: 5000
+            }
+
+
+            );
+        });
+
+
+    </script>
 }

@@ -1,0 +1,69 @@
+﻿@model IEnumerable<clase1posta.Models.Pago>
+
+@{
+    ViewData["Title"] = "MostrarPagos";
+}
+
+<h2>Cuotas</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Contrato
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cuota)
+            </th>
+
+            <th> Importe </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>Fecha Pago</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPago)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdContrato)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cuota)
+            </td>
+
+            <td>
+                @ViewBag.Contrato
+
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            @if (item.Estado == false)
+            {
+                <td>
+                    @Html.ActionLink("Pagar", "RealizarPago", "Pago", new { id = item.IdPago }) 
+
+                </td>
+            }
+            else
+            {
+                <td>
+                    @item.FechaPago.ToShortDateString()
+                </td>
+            }
+
+        </tr>
+}
+    </tbody>
+</table>
