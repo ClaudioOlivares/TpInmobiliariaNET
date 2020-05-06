@@ -46,6 +46,8 @@ namespace clase1posta.Controllers
             {
                 // TODO: Add insert logic here
                 repositorioTipo.Alta(c);
+                TempData["mensaje"] = "Exito";
+                TempData["mensaje2"] = " El Tipo-Inmueble cargado fue Modificado correctamente";
                 return RedirectToAction("Index","Usuario");
             }
             catch
