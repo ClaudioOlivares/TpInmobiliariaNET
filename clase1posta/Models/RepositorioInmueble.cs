@@ -211,6 +211,222 @@ namespace clase1posta.Models
             }
             return res;
         }
+
+
+        public IList<Inmueble> ObtenerDisponibles()
+        {
+            IList<Inmueble> res = new List<Inmueble>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = "SELECT IdInmueble, i.IdPropietario,Direccion,IdTipo,CantAmbientes,Precio,Estado," +
+                    " p.Nombre, p.Apellido, t.NombreTipo" +
+                    " FROM Inmuebles i INNER JOIN Propietarios p ON i.IdPropietario = p.IdPropietario  " +
+                    " INNER JOIN TipoInmueble t ON i.IdTipo = t.IdTipoInmueble " +
+                     "WHERE i.Estado = 'True'";
+
+                /*  string sql = "SELECT IdInmueble, i.IdPropietario,Direccion,IdTipo,CantAmbientes,Precio,Estado" +
+
+                     " FROM Inmuebles i " ;*/
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    try
+                    {
+                        var reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Inmueble p = new Inmueble
+                            {
+                                IdInmueble = reader.GetInt32(0),
+                                IdPropietario = reader.GetInt32(1),
+
+                                Direccion = reader.GetString(2),
+                                IdTipo = reader.GetInt32(3),
+                                CantAmbientes = reader.GetInt32(4),
+                                Precio = reader.GetDecimal(5),
+                                Estado = reader.GetBoolean(6),
+                                Tipo = new TipoInmueble
+                                {
+                                    idTípoInmueble = reader.GetInt32(3),
+                                    nombreTipo = reader.GetString(9),
+
+                                },
+                                Propietario = new Propietario
+                                {
+                                    idPropietario = reader.GetInt32(1),
+                                    nombre = reader.GetString(7),
+                                    apellido = reader.GetString(8),
+                                }
+
+
+                            };
+
+                            res.Add(p);
+                        }
+
+                    }
+                    catch (System.Exception ex)
+                    {
+
+
+                    }
+
+                    connection.Close();
+                }
+            }
+            return res;
+        }
+
+
+
+
+       
+
+
+
+
+        public IList<Inmueble> ObtenerTodosPorDni(String id)
+        {
+            IList<Inmueble> res = new List<Inmueble>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = "SELECT IdInmueble, i.IdPropietario,Direccion,IdTipo,CantAmbientes,Precio,Estado," +
+                    " p.Nombre, p.Apellido, t.NombreTipo" +
+                    " FROM Inmuebles i INNER JOIN Propietarios p ON i.IdPropietario = p.IdPropietario  " +
+                    " INNER JOIN TipoInmueble t ON i.IdTipo = t.IdTipoInmueble "+
+                     "WHERE p.Dni = @id";
+
+                /*  string sql = "SELECT IdInmueble, i.IdPropietario,Direccion,IdTipo,CantAmbientes,Precio,Estado" +
+
+                     " FROM Inmuebles i " ;*/
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.Add("@id", SqlDbType.VarChar).Value = id;
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    try
+                    {
+                        var reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Inmueble p = new Inmueble
+                            {
+                                IdInmueble = reader.GetInt32(0),
+                                IdPropietario = reader.GetInt32(1),
+
+                                Direccion = reader.GetString(2),
+                                IdTipo = reader.GetInt32(3),
+                                CantAmbientes = reader.GetInt32(4),
+                                Precio = reader.GetDecimal(5),
+                                Estado = reader.GetBoolean(6),
+                                Tipo = new TipoInmueble
+                                {
+                                    idTípoInmueble = reader.GetInt32(3),
+                                    nombreTipo = reader.GetString(9),
+
+                                },
+                                Propietario = new Propietario
+                                {
+                                    idPropietario = reader.GetInt32(1),
+                                    nombre = reader.GetString(7),
+                                    apellido = reader.GetString(8),
+                                }
+
+
+                            };
+
+                            res.Add(p);
+                        }
+
+                    }
+                    catch (System.Exception ex)
+                    {
+
+
+                    }
+
+                    connection.Close();
+                }
+            }
+            return res;
+        }
+
+
+        public IList<Inmueble> ObtenerInmueblesLibres(DateTime fechaahora, DateTime fechaFinal)
+        {
+            IList<Inmueble> res = new List<Inmueble>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = $"SELECT i.IdInmueble , i.IdPropietario,Direccion,IdTipo,CantAmbientes,Precio,Estado, " +
+                    "p.Nombre, p.Apellido, t.NombreTipo" +
+                    " FROM Inmuebles i INNER JOIN Propietarios p ON i.IdPropietario = p.IdPropietario " +
+                    " INNER JOIN TipoInmueble t ON i.IdTipo = t.IdTipoInmueble " +
+                    " WHERE i.IdInmueble NOT IN (SELECT i.IdInmueble FROM Contratos c  INNER JOIN Inmuebles i ON c.IdInmueble = i.IdInmueble Where (@fecha >= c.FechaInicio AND @fecha <= c.FechaFinal) OR (@fecha2 >= c.FechaInicio AND @fecha2 <= c.FechaFinal))";
+
+                /*  string sql = "SELECT IdInmueble, i.IdPropietario,Direccion,IdTipo,CantAmbientes,Precio,Estado" +
+
+                     " FROM Inmuebles i " ;*/
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.Add("@fecha", SqlDbType.Date).Value = fechaahora;
+                    command.Parameters.Add("@fecha2", SqlDbType.Date).Value = fechaFinal;
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    try
+                    {
+                        var reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Inmueble p = new Inmueble
+                            {
+                                IdInmueble = reader.GetInt32(0),
+                                IdPropietario = reader.GetInt32(1),
+
+                                Direccion = reader.GetString(2),
+                                IdTipo = reader.GetInt32(3),
+                                CantAmbientes = reader.GetInt32(4),
+                                Precio = reader.GetDecimal(5),
+                                Estado = reader.GetBoolean(6),
+                                Tipo = new TipoInmueble
+                                {
+                                    idTípoInmueble = reader.GetInt32(3),
+                                    nombreTipo = reader.GetString(9),
+
+                                },
+                                Propietario = new Propietario
+                                {
+                                    idPropietario = reader.GetInt32(1),
+                                    nombre = reader.GetString(7),
+                                    apellido = reader.GetString(8),
+                                }
+
+
+                            };
+
+                            res.Add(p);
+                        }
+
+                    }
+                    catch (System.Exception ex)
+                    {
+
+
+                    }
+
+                    connection.Close();
+                }
+            }
+            return res;
+        }
+
+
+
+
+
+
+
+
     }
 
 

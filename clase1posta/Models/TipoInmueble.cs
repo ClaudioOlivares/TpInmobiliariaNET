@@ -10,7 +10,7 @@ namespace clase1posta.Models
     {
         [Key]
         public int idTípoInmueble { get; set; }
-        [Display (Name = "HOLA")]
+      
         public String nombreTipo { get; set; }
 
     }

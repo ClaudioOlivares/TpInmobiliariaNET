@@ -5,17 +5,324 @@
 }
 
 <style>
-    
+
+
+    .tabs .indicator {
+        background-color: rgba(255, 255, 255, 1);
+    }
+
+
+    .tabs .tab a {
+        background-color: rgba(129, 212, 250, 1);
+        color: white;
+    }
+
+        .tabs .tab a:hover {
+            color: white;
+            background-color: rgba(79, 195, 247, 1)
+            /*Custom Color On Hover*/
+        }
+
+        .tabs .tab a.active {
+            background-color: rgba(79, 195, 247, 1) !important;
+            color: white !important;
+        }
 </style>
 
 
 
+<div class="row">
+    <div class="col s12">
+        <ul class="tabs tabs-fixed-width">
+            <li class="tab col s3"><a href="#test1">Vigentes hoy</a></li>
+            @if(ViewBag.tab != null)
+            {
+                @if (ViewBag.tab == "2" )
+                {
+                    <li class="tab col s3"><a href="#test2" id="1">Buscar inmuebles libres</a></li>
+                    <li class="tab col s3"><a class="active" href="#test4" id="2">Buscar Contrato de Inmueble</a></li>
+                }
+                else
+                {
+                    <li class="tab col s3"><a class="active" href="#test2" id="1">Buscar inmuebles libres</a></li>
+                    <li class="tab col s3"><a href="#test4" id="2">Buscar Contrato de Inmueble</a></li>
 
-<div >
+                }
+            }
+            else
+            {
+                    <li class="tab col s3"><a class="active" href="#test2" id="1">Buscar inmuebles libres</a></li>
+                    <li class="tab col s3"><a href="#test4" id="2">Buscar Contrato de Inmueble</a></li>
+
+            }
+
+
+
+        </ul>
+    </div>
+    <div id="test1" class="col s12">
+        <div class="light-blue lighten-5 contenedor">
+            <table class="table highlight centered" id="tabla">
+                <thead>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+
+                        <th>
+                            DniInquilino
+                        </th>
+
+                        <th>
+                            Direccion
+                        </th>
+                        <th>
+                            Precio
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Duracion)
+                        </th>
+                        <th>
+                            Inicio
+                        </th>
+                        <th>
+                            Fin
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    @foreach (var item in (IList<Contrato>)ViewBag.vigentes)
+                    {
+                        <tr>
+                            <td>
+                                @item.IdContrato
+
+
+                            </td>
+
+                            <td>
+                                @item.Inquilino.dni
+
+                            </td>
+
+                            <td>
+                                @item.Inmueble.Direccion
+                            </td>
+                            <td>
+                                @item.Precio
+                            </td>
+                            <td>
+                                @item.Duracion
+                            </td>
+                            <td>
+                                @item.FechaInicio.ToShortDateString()
+
+                            </td>
+                            <td>
+                                @item.FechaFinal.ToShortDateString()
+                            </td>
+                            <td>
+
+                                <a href="@Url.Action("Edit", "Contrato", new { id = item.IdContrato})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Editar" style="border-radius:100px"><i class="tiny material-icons">create</i></a>
+                                <a href="@Url.Action("Delete", "Contrato", new { id = item.IdContrato})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Eliminar" style="border-radius:100px"><i class="tiny material-icons">delete</i></a>
+                                <a href="@Url.Action("MostrarPagos", "Pago", new { id = item.IdContrato})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Ver Pagos" style="border-radius:100px"><i class="tiny material-icons">attach_money</i></a>
+                                <a href="@Url.Action("Cancelar", "Contrato", new { id = item.IdContrato})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Cancelar Contrato" style="border-radius:100px"><i class="tiny material-icons">cancel</i></a>
+
+                            </td>
+                        </tr>
+
+
+                    }
+
+
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    <div id="test2" class="col s12">
+        <div>
+            <form asp-action="Index" style="margin-top:10px">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">date_range</i>
+                    <input id="fechaInicial" name="fechaInicial" type="text" class="datepicker" required />
+                    <label for="fechaInicial">Fecha Inicial</label>
+                    <span class="text-danger"></span>
+                </div>
+
+
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">date_range</i>
+                    <input id="fechaFinal" name="fechaFinal" type="text" class="datepicker" required />
+                    <label for="fechaFinal">Fecha Final</label>
+                    <span class="text-danger"></span>
+                </div>
+                <div class="input-field col s12">
+                    <button class=" btn waves-effect waves-light  light-blue lighten-1" type="submit" name="action">
+                        Buscar
+                        <i class="material-icons right">search</i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <br />
+
+
+        @if (ViewBag.buscadorcontrato1 != null)
+        {
+                <table class="table highlight centered " id="tabla">
+                    <thead>
+                        <tr>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                Direccion
+                            </th>
+                            <th>
+                                Precio
+                            </th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody class="light-blue lighten-5 " style="border-radius:20px">
+
+
+                        @foreach (var item in (IList<Inmueble>)ViewBag.buscadorcontrato1)
+                        {
+
+                            <tr>
+                                <td>
+                                    @item.IdInmueble
+
+                                </td>
+                                <td>
+                                    @item.Direccion
+
+                                </td>
+                                <td>
+                                    @item.Precio
+
+                                </td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+
+                </table>
+            
+        }
+
+    </div>
+    <div id="test4" class="col s12 ">
+        
+        <form asp-action="Index" class="" style="margin-top:10px">
+            
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">map</i>
+                    <input id="direccion" name="direccion" type="text" class="validate">
+                    <label for="direccion">Ingrese la direccion del inmueble</label>
+                    <span class="text-danger"></span>
+                </div>
+
+                <div class="input-field col s12">
+                    <button class=" btn waves-effect waves-light  light-blue lighten-1" type="submit" name="action" id="buscar2">
+                        Buscar
+                        <i class="material-icons right">search</i>
+                    </button>
+                </div>
+            
+        </form>
+
+        @if (ViewBag.buscadorcontrato2 != null)
+        {
+            <table class="table highlight centered " id="tabla">
+                <thead>
+                    <tr>
+                        <th>
+                            Id Contrato
+                        </th>
+                        <th>
+                            Dni Inquilino
+                        </th>
+                        <th>
+                            Precio
+                        </th>
+                        <th>
+                            Fecha Inicio
+                        </th>
+                        <th>
+                            Fecha Final
+                        </th>
+                        <th>    </th>
+                    </tr>
+                </thead>
+                <tbody class="light-blue lighten-5 " style="border-radius:20px">
+
+
+                    @foreach (var item in (IList<Contrato>)ViewBag.buscadorcontrato2)
+                    {
+
+                        <tr>
+                            <td>
+                                @item.IdContrato
+
+                            </td>
+                            <td>
+                                @item.Inquilino.dni
+
+                            </td>
+                            <td>
+                                @item.Precio
+
+                            </td>
+                            <td>
+                                @item.FechaInicio
+
+                            </td>
+                            <td>
+                                @item.FechaFinal
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Contrato", new { id = item.IdContrato})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Editar" style="border-radius:100px"><i class="tiny material-icons">create</i></a>
+                                <a href="@Url.Action("Delete", "Contrato", new { id = item.IdContrato})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Eliminar" style="border-radius:100px"><i class="tiny material-icons">delete</i></a>
+                                <a href="@Url.Action("MostrarPagos", "Pago", new { id = item.IdContrato})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Ver Pagos" style="border-radius:100px"><i class="tiny material-icons">attach_money</i></a>
+                                <a href="@Url.Action("Cancelar", "Contrato", new { id = item.IdContrato})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Cancelar Contrato" style="border-radius:100px"><i class="tiny material-icons">cancel</i></a>
+
+
+                            </td>
+                        </tr>
+
+                    }
+
+                </tbody>
+
+            </table>
+
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+<br />
+
+
+<div>
     <h2 style="display:inline-block">Contratos</h2>
-    <a class="btn-floating btn-large waves-effect waves-light light-blue lighten-2 btn tooltipped" data-position="bottom" data-tooltip="Agregar Contrato" asp-action="Create" style="margin-top:-20px; margin-left: 25px"><i class="material-icons">add</i></a>
+    <a class="btn-floating btn-large waves-effect waves-light light-blue lighten-2 btn tooltipped " data-position="bottom" data-tooltip="Agregar Contrato" asp-action="Create" style="margin-top:-20px; margin-left: 25px"><i class="material-icons">add</i></a>
 
-    
+
 </div>
 <br />
 
@@ -26,15 +333,11 @@
                 <th>
                     Id
                 </th>
-                <th>
-                    IdInquilino
-                </th>
+
                 <th>
                     DniInquilino
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IdInmueble)
-                </th>
+
                 <th>
                     Direccion
                 </th>
@@ -62,21 +365,17 @@
 
 
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdInquilino)
-                    </td>
+
                     <td>
                         @Html.DisplayFor(modelItem => item.Inquilino.dni)
 
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdInmueble)
-                    </td>
+
                     <td>
                         @Html.DisplayFor(modelItem => item.Inmueble.Direccion)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Inmueble.Precio)
+                        @Html.DisplayFor(modelItem => item.Precio)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Duracion)
@@ -90,9 +389,9 @@
                     </td>
                     <td>
 
-                        <a href="@Url.Action("Edit", "Contrato", new { id = item.IdContrato})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped"  data-position="bottom" data-tooltip="Editar" style="border-radius:100px"><i class="tiny material-icons">create</i></a>
+                        <a href="@Url.Action("Edit", "Contrato", new { id = item.IdContrato})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Editar" style="border-radius:100px"><i class="tiny material-icons">create</i></a>
                         <a href="@Url.Action("Delete", "Contrato", new { id = item.IdContrato})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Eliminar" style="border-radius:100px"><i class="tiny material-icons">delete</i></a>
-                        <a href="@Url.Action("MostrarPagos", "Pago", new { id = item.IdContrato})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped"data-position="bottom" data-tooltip="Ver Pagos"  style="border-radius:100px"><i class="tiny material-icons">attach_money</i></a>
+                        <a href="@Url.Action("MostrarPagos", "Pago", new { id = item.IdContrato})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Ver Pagos" style="border-radius:100px"><i class="tiny material-icons">attach_money</i></a>
                         <a href="@Url.Action("Cancelar", "Contrato", new { id = item.IdContrato})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Cancelar Contrato" style="border-radius:100px"><i class="tiny material-icons">cancel</i></a>
 
                     </td>
@@ -108,8 +407,8 @@
 
 <div class="tap-target " id="colorTap" data-target="menu">
     <div class="tap-target-content ">
-        <h5 id="tituloAnuncio">Title</h5>
-        <p id ="textoAnuncio">A bunch of text</p>
+        <h4  id="tituloAnuncio"><b>Title</b></h4>
+        <h5 id="textoAnuncio">A bunch of text</h5>
     </div>
 </div>
 

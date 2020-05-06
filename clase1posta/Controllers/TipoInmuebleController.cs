@@ -40,13 +40,13 @@ namespace clase1posta.Controllers
         // POST: TipoInmueble/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(TipoInmueble c)
         {
             try
             {
                 // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
+                repositorioTipo.Alta(c);
+                return RedirectToAction("Index","Usuario");
             }
             catch
             {

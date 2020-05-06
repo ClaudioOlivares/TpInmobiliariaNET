@@ -49,6 +49,15 @@
             {
                 border-radius: 20px;
             }
+            
+           
+
+
+
+
+
+
+
         </style>
 
 
@@ -73,21 +82,23 @@
             {
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="brand-logo text-white">CANDACE</a>
             }
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                @if (User.Identity.IsAuthenticated)
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li><a asp-area="" asp-controller="Propietarios" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">accessibility</i>Propietarios</a></li>
+                <li><a asp-area="" asp-controller="Inquilino" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">account_box</i>Inquilinos</a></li>
+                <li><a asp-area="" asp-controller="Inmueble" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">weekend</i>Inmuebles</a></li>
+                <li><a asp-area="" asp-controller="Contrato" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">assignment</i>Contratos</a></li>
+                @if (User.IsInRole("Administrador"))
                 {
-                    <li><a asp-area="" asp-controller="Propietarios" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">accessibility</i>Propietarios</a></li>
-                    <li><a asp-area="" asp-controller="Inquilino" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">account_box</i>Inquilinos</a></li>
-                    <li><a asp-area="" asp-controller="Inmueble" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">weekend</i>Inmuebles</a></li>
-                    <li><a asp-area="" asp-controller="Contrato" asp-action="Index" class="waves-effect waves-light"><i class="material-icons left">assignment</i>Contratos</a></li>
-                    @if (User.IsInRole("Administrador"))
-                    {
-                        <li><a asp-area="" asp-controller="Usuario" asp-action="Index"><i class="material-icons left">star</i>Usuarios</a></li>
-                    }
-                    <li style="float:right"  class="waves-effect waves-light"><a id="abrir"><i class="large material-icons left">menu</i></a></li>
-
+                    <li><a class="" asp-area="" asp-controller="Usuario" asp-action="Index"><i class="material-icons left">star</i>Usuarios</a></li>
+                  
                 }
-            </ul>
+            }
+            <li style="float:right" class="waves-effect waves-light"><a id="abrir"><i class="large material-icons left">menu</i></a></li>
+
+            
+        </ul>
         </div>
     </nav>
     
@@ -133,17 +144,24 @@
                 $('select').formSelect();
                 $('.tooltipped').tooltip();
                 $('.sidenav').sidenav();
-                
+                $('.tabs').tabs();
             });
 
         </script>
 
-        <script>
+        <script type="text/javascript">
             $("#abrir").click(function () {
 
                   $('.sidenav').sidenav('open');
             });
 
+             $("#buscar2").click(function () {
+
+                 document.getElementById(1).classList.remove("active");
+                 document.getElementById(2).classList.add("active");
+
+                 
+            });
         </script>
         @if (TempData["mensaje"] != null)
         {

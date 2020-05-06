@@ -2,12 +2,171 @@
 
 @{
     ViewData["Title"] = "Index";
+   //  var asd = (IEnumerable<Inmueble>)TempData["employee"]; 
 }
+    <style>
+
+ 
+        .tabs .indicator {
+        
+         background-color: rgba(255, 255, 255, 1);
+         
+         }
+  
+    
+             .tabs .tab a {
+         background-color: rgba(129, 212, 250, 1);
+         color:white;
+        }
+
+          .tabs .tab a:hover {
+          color:white;
+            background-color: rgba(79, 195, 247, 1)
+          /*Custom Color On Hover*/
+        }
+          .tabs .tab a.active {
+
+              background-color: rgba(79, 195, 247, 1) !important;
+
+              color: white !important;
+
+            }
+
+
+    </style>
+    
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs tabs-fixed-width ">
+               
+
+                <li class="tab col s3"><a href="#test1">Inmuebles listados para alquilar</a></li>
+                <li class="tab col s3"><a class="active" href="#test2">Buscar inmuebles de propietario</a></li>
+                
+
+            </ul>
+        </div>
+        <div id="test1" class="col s12" style="margin-top:20px">
+            <div class="light-blue lighten-5 contenedor">
+                <table class="table highlight centered" id="tabla">
+                    <thead>
+                        <tr>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                Direccion
+                            </th>
+                            <th>
+                                Dueño
+                            </th>
+                            <th>
+                                
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in (IList<Inmueble>)ViewBag.Disponibles)
+                        {
+                            <tr>
+                                <td>
+                                    @item.IdInmueble
+                                </td>
+                                <td>
+                                    @item.Direccion
+                                </td>
+                                <td>
+                                    @item.Propietario.nombre  @item.Propietario.apellido
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit", "Inmueble", new { id = item.IdInmueble})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Editar" style="border-radius:100px"><i class="tiny material-icons">create</i></a>
+                                    <a href="@Url.Action("Delete", "Inmueble", new { id = item.IdInmueble})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Eliminar" style="border-radius:100px;"><i class="tiny material-icons">delete</i></a>
+                                </td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <div id="test2" class="col s12">
+
+            <form asp-action="Index">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">person</i>
+                    <input id="dni" name="dni" type="text" class="validate">
+                    <label for="dni">Ingrese el dni del propietario</label>
+                    <span class="text-danger"></span>
+                </div>
+
+                <div class="input-field col s12">
+                    <button class=" btn waves-effect waves-light  light-blue lighten-1" type="submit" name="action">
+                        Buscar
+                        <i class="material-icons right">search</i>
+                    </button>
+                </div>
+
+            </form>
+           
+
+                @if (ViewBag.buscador != null)
+                {
+
+                    <table class="table highlight centered" id="tabla">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Id
+                                </th>
+                                <th>
+                                    Direccion
+                                </th>
+                                <th>
+                                    Dueño
+                                </th>
+                            </tr>
+                        </thead>
+
+                            <tbody class="light-blue lighten-5">
+
+
+                                @foreach (var item in (IList<Inmueble>)ViewBag.buscador)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            @item.IdInmueble
+
+                                        </td>
+                                        <td>
+                                            @item.Direccion
+
+                                        </td>
+                                        <td>
+                                            @item.Propietario.nombre  @item.Propietario.apellido
+
+                                        </td>
+                                    </tr>
+
+                                }
+
+                            </tbody>
+
+                        
+                    </table>
+                  }
+           
+        </div>
+    </div>
 <div>
     <h2 style="display:inline-block">Inmuebles</h2>
-    <a class="btn-floating btn-large waves-effect waves-light light-blue lighten-2 btn tooltipped" data-position="bottom" data-tooltip="Agregar Inquilino" asp-action="Create" style="margin-top:-20px; margin-left: 25px"><i class="material-icons">add</i></a>
+    <a class="btn-floating btn-large waves-effect waves-light light-blue lighten-2 btn tooltipped" data-position="bottom" data-tooltip="Agregar Inmueble" asp-action="Create" style="margin-top:-20px; margin-left: 25px"><i class="material-icons">add</i></a>
 </div>
 <br />
+
 <div class="light-blue lighten-5 contenedor">
     <table class="table highlight centered" id="tabla">
         <thead>
@@ -15,9 +174,7 @@
                 <th>
                     Id
                 </th>
-                <th>
-                    Id Prop
-                </th>
+               
                 <th>
                     Nombre Prop
                 </th>
@@ -27,9 +184,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Direccion)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IdTipo)
-                </th>
+               
                 <th>
                     Tipo
                 </th>
@@ -39,7 +194,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Precio)
                 </th>
-                <th>
+                <th class=" tooltipped"   data-position="top" data-tooltip="L = Listado | N/L = NO Listado  ">
                     @Html.DisplayNameFor(model => model.Estado)
                 </th>
                 <th></th>
@@ -52,9 +207,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.IdInmueble)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdPropietario)
-                    </td>
+                    
                     <td>
                         @Html.DisplayFor(modelItem => item.Propietario.nombre)
                     </td>
@@ -64,9 +217,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Direccion)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdTipo)
-                    </td>
+                   
                     <td>
                         @Html.DisplayFor(modelItem => item.Tipo.nombreTipo)
                     </td>
@@ -92,7 +243,7 @@
 
                     <td>
                         <a href="@Url.Action("Edit", "Inmueble", new { id = item.IdInmueble})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Editar" style="border-radius:100px"><i class="tiny material-icons">create</i></a>
-                        <a href="@Url.Action("Delete", "Inmueble", new { id = item.IdInmueble})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Eliminar" style="border-radius:100px; margin-top: 10px"><i class="tiny material-icons">delete</i></a>
+                        <a href="@Url.Action("Delete", "Inmueble", new { id = item.IdInmueble})" class="waves-effect waves-light btn-flat light-blue lighten-3 tooltipped" data-position="bottom" data-tooltip="Eliminar" style="border-radius:100px;"><i class="tiny material-icons">delete</i></a>
 
                     </td>
                 </tr>
@@ -106,7 +257,7 @@
 
 <div class="tap-target " id="colorTap" data-target="menu">
     <div class="tap-target-content ">
-        <h5 id="tituloAnuncio">Title</h5>
+        <h4 id="tituloAnuncio">Title</h4>
         <p id="textoAnuncio">A bunch of text</p>
     </div>
 </div>

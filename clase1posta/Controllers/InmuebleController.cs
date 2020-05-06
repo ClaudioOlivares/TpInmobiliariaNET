@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace clase1posta.Controllers
 {
@@ -27,10 +28,24 @@ namespace clase1posta.Controllers
         // GET: Inmueble
         public ActionResult Index()
         {
+           
+            ViewBag.Disponibles = repositorioInmueble.ObtenerDisponibles();
             var lista = repositorioInmueble.ObtenerTodos();
             return View(lista);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(IFormCollection collection)
+        {
+            var dni = collection["dni"];
+            ViewBag.Disponibles = repositorioInmueble.ObtenerDisponibles();
+            IList<Inmueble> p = repositorioInmueble.ObtenerTodosPorDni(dni);
+             ViewBag.buscador = p;
+            var lista = repositorioInmueble.ObtenerTodos();
+            return View(lista);
+
+        }
         // GET: Inmueble/Details/5
         public ActionResult Details(int id)
         {

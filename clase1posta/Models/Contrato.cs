@@ -17,12 +17,7 @@ namespace clase1posta.Models
         public int Duracion { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFinal { get; set; }
-
-
-     
-
-
-
+        public Decimal Precio { get; set; }
 
     }
 }

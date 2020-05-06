@@ -47,5 +47,36 @@ namespace clase1posta.Models
             }
             return res;
         }
+
+
+        public int Alta(TipoInmueble p)
+        {
+            int res = -1;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = $"INSERT INTO TipoInmueble (NombreTipo) " +
+                    $"VALUES (@nombre);" +
+                    $"SELECT SCOPE_IDENTITY();";//devuelve el id insertado
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.AddWithValue("@nombre", p.nombreTipo);
+
+
+                    connection.Open();
+                    res = Convert.ToInt32(command.ExecuteScalar());
+                    p.idTípoInmueble = res;
+                    connection.Close();
+                }
+            }
+            return res;
+        }
+
+
+
+
+
+
+
     }
 }

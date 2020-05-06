@@ -36,12 +36,43 @@ namespace clase1posta.Controllers
         public ActionResult Index()
         {
             var  c = repoContrato.ObtenerTodos();
-            
+            ViewBag.vigentes = repoContrato.ObtenerVigentes(DateTime.Now);
             return View(c);
         }
 
-        // GET: Contrato/Details/5
-        public ActionResult Details(int id)
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(IFormCollection collection)
+        {
+            
+            var c = repoContrato.ObtenerTodos();
+            ViewBag.vigentes = repoContrato.ObtenerVigentes(DateTime.Now);
+            if(collection["fechaInicial"].ToString().Length != 0 && collection["fechaFinal"].ToString().Length != 0)
+            {
+                var fechaInicial = DateTime.Parse(collection["fechaInicial"]);
+                var fechaFinal = DateTime.Parse(collection["fechaFinal"]);
+                ViewBag.buscadorcontrato1 = repoInmueble.ObtenerInmueblesLibres(fechaInicial, fechaFinal);
+                ViewBag.tab = "1";
+            }
+           
+            if (collection["direccion"].ToString().Length != 0)
+            {
+                var dire = collection["direccion"];
+                ViewBag.buscadorcontrato2 = repoContrato.ObtenerTodosLosContratosDeInmueble(dire);
+                ViewBag.tab = "2"; 
+            }
+          
+            
+           
+
+            return View(c);
+        }
+
+
+
+            // GET: Contrato/Details/5
+            public ActionResult Details(int id)
         {
             return View();
         }
@@ -89,6 +120,8 @@ namespace clase1posta.Controllers
                 }
                 try
                 {
+                    var j = repoInmueble.ObtenerPorId(c.IdInmueble);
+                    c.Precio = j.Precio;
                     var contratocreado = repoContrato.Alta(c);
                     
                     Pago p = new Pago();
@@ -97,6 +130,7 @@ namespace clase1posta.Controllers
                         p.IdContrato = contratocreado;
                         p.Cuota = i;
                         p.Estado = false;
+                        p.Precio = c.Precio;
                         
                         repoPagos.Alta(p);
                         
@@ -136,13 +170,34 @@ namespace clase1posta.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+                var j = repoInmueble.ObtenerPorId(c.IdInmueble);
+                c.Precio = j.Precio;
                 repoContrato.Modificacion(c);
+                repoPagos.ModificarPrecio(c.Precio, c.IdContrato);
+                var contadorPagos = repoPagos.ContadorPagos(c.IdContrato);
+                if(contadorPagos < c.Duracion)
+                {
+                    while(contadorPagos < c.Duracion)
+                    {
+                        var pagoNuevo = new Pago();
+                        pagoNuevo.IdContrato = c.IdContrato;
+                        pagoNuevo.Cuota = contadorPagos +1;
+                        pagoNuevo.Estado = false;
+                        pagoNuevo.Precio = c.Precio;
+
+                        repoPagos.Alta(pagoNuevo);
+                        contadorPagos++;
+                    }
+                }
+                else if(contadorPagos > c.Duracion)
+                {
+                    repoPagos.Baja1(c.IdContrato, contadorPagos);     
+                }
                 TempData["mensaje"] = "Exito";
                 TempData["mensaje2"] = "contrato modificado correctamente";
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
@@ -198,6 +253,7 @@ namespace clase1posta.Controllers
             {
                 // TODO: Add delete logic here
                 repoContrato.Baja(id);
+                repoPagos.BajaNoPagos(id);
                 TempData["mensaje"] = "Exito";
                 TempData["mensaje2"] = "contrato Eliminado correctamente";
                 return RedirectToAction(nameof(Index));
