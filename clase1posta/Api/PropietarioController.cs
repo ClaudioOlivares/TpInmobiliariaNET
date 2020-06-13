@@ -84,7 +84,7 @@ namespace clase1posta.Api
 
             try
             { 
-                if(p.clave != null)
+                if(p.clave != "") //no ingreso ninguna clave
                 {
                     if (ModelState.IsValid && context.Propietarios.AsNoTracking().Where(x => x.email == User.Identity.Name) != null)
                     {
