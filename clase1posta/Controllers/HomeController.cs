@@ -11,11 +11,11 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace clase1posta.Controllers
 {
     [Authorize]
-
     public class HomeController : Controller
     {
 

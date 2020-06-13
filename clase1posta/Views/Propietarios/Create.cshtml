@@ -51,6 +51,13 @@
                 </div>
 
                 <div class="input-field col s12">
+                    <i class="material-icons prefix ">clave</i>
+                    <label asp-for="clave" class="control-label"></label>
+                    <input class='validate'  asp-for="clave" required />
+                    <span asp-validation-for="clave" class="text-danger"></span>
+                </div>
+
+                <div class="input-field col s12">
                     <button class=" btn-large waves-effect waves-light  light-blue lighten-1" type="submit" name="action">
                         Enviar
                         <i class="material-icons right">send</i>

@@ -9,9 +9,9 @@ namespace clase1posta.Models
     public class TipoInmueble
     {
         [Key]
-        public int idTípoInmueble { get; set; }
+        public int IdTipoInmueble { get; set; }
       
-        public String nombreTipo { get; set; }
+        public String NombreTipo { get; set; }
 
     }
 }

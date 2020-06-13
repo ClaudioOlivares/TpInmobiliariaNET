@@ -16,5 +16,6 @@ namespace clase1posta.Models
         public string dni { get; set; }
         public string telefono { get; set; }
         public string email { get; set; }
+        public string clave { get; set; }
     }
 }

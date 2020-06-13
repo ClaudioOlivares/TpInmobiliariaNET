@@ -30,16 +30,16 @@
 
                 <div class=" input-field col s6">
 
-                    <select class="" name="IdTipo" required>
+                    <select class="" name="IdTipoInmueble" required>
 
 
                         <option value="" disabled selected>Elegir Tipo </option>
                         @foreach (var item2 in (IList<TipoInmueble>)ViewBag.Tipos)
                         {
-                            <option value="@item2.idTípoInmueble">@(item2.idTípoInmueble + " " + item2.nombreTipo)</option>
+                            <option value="@item2.IdTipoInmueble">@(item2.IdTipoInmueble + " " + item2.NombreTipo)</option>
                         }
                     </select>
-                    <span asp-validation-for="IdTipo" class="text-danger"></span>
+                    <span asp-validation-for="IdTipoInmueble" class="text-danger"></span>
                 </div>
 
                 <div class="input-field col s12">

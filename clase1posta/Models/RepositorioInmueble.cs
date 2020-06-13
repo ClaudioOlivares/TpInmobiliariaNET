@@ -25,14 +25,12 @@ namespace clase1posta.Models
             IList<Inmueble> res = new List<Inmueble>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = "SELECT IdInmueble, i.IdPropietario,Direccion,IdTipo,CantAmbientes,Precio,Estado," +
+                string sql = "SELECT IdInmueble, i.IdPropietario,Direccion,i.IdTipoInmueble,CantAmbientes,Precio,Estado," +
                     " p.Nombre, p.Apellido, t.NombreTipo" +
                     " FROM Inmuebles i INNER JOIN Propietarios p ON i.IdPropietario = p.IdPropietario  " +
-                    " INNER JOIN TipoInmueble t ON i.IdTipo = t.IdTipoInmueble";
+                    " INNER JOIN TipoInmueble t ON i.IdTipoInmueble = t.IdTipoInmueble";
 
-              /*  string sql = "SELECT IdInmueble, i.IdPropietario,Direccion,IdTipo,CantAmbientes,Precio,Estado" +
-                  
-                   " FROM Inmuebles i " ;*/
+              
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
@@ -48,14 +46,14 @@ namespace clase1posta.Models
                                 IdPropietario = reader.GetInt32(1),
                               
                                 Direccion = reader.GetString(2),
-                                IdTipo = reader.GetInt32(3),
+                                IdTipoInmueble = reader.GetInt32(3),
                                 CantAmbientes = reader.GetInt32(4),
                                 Precio = reader.GetDecimal(5),
                                 Estado = reader.GetBoolean(6),
-                                Tipo = new TipoInmueble
+                                TipoInmueble = new TipoInmueble
                                 {
-                                    idTípoInmueble = reader.GetInt32(3),
-                                    nombreTipo = reader.GetString(9),
+                                    IdTipoInmueble = reader.GetInt32(3),
+                                    NombreTipo = reader.GetString(9),
 
                                 },
                                 Propietario = new Propietario
@@ -90,15 +88,16 @@ namespace clase1posta.Models
             int res = -1;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = $"INSERT INTO Inmuebles (IdPropietario,Direccion,IdTipo,CantAmbientes,Precio,Estado) " +
-                    "VALUES (@IdPropietario, @Direccion, @IdTipo, @CantAmbientes, @Precio, @Estado);" +
+                
+                string sql = $"INSERT INTO Inmuebles (IdPropietario,Direccion,IdTipoInmueble,CantAmbientes,Precio,Estado) " +
+                    "VALUES (@IdPropietario, @Direccion, @IdTipoInmueble, @CantAmbientes, @Precio, @Estado);" +
                     "SELECT SCOPE_IDENTITY();";//devuelve el id insertado (LAST_INSERT_ID para mysql)
                 using (var command = new SqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
                     command.Parameters.AddWithValue("@IdPropietario", entidad.IdPropietario);
                     command.Parameters.AddWithValue("@Direccion", entidad.Direccion);
-                    command.Parameters.AddWithValue("@IdTipo", entidad.IdTipo);
+                    command.Parameters.AddWithValue("@IdTipoInmueble", entidad.IdTipoInmueble);
                     command.Parameters.AddWithValue("@CantAmbientes", entidad.CantAmbientes);
                     command.Parameters.AddWithValue("@Precio", entidad.Precio);
                     command.Parameters.AddWithValue("@Estado", entidad.Estado);
@@ -139,7 +138,7 @@ namespace clase1posta.Models
                                 IdInmueble = reader.GetInt32(0),
                                 IdPropietario = reader.GetInt32(1),
                                 Direccion = reader.GetString(2),
-                                IdTipo = reader.GetInt32(3),
+                                IdTipoInmueble = reader.GetInt32(3),
                                 CantAmbientes = reader.GetInt32(4),
                                 Precio = reader.GetDecimal(5),
                                 Estado = reader.GetBoolean(6),
@@ -148,9 +147,9 @@ namespace clase1posta.Models
                                     nombre = reader.GetString(7),
                                     apellido = reader.GetString(8),
                                 },
-                                Tipo = new TipoInmueble
+                                TipoInmueble = new TipoInmueble
                                 {
-                                    nombreTipo = reader.GetString(9),
+                                    NombreTipo = reader.GetString(9),
                                 }
 
                             };
@@ -197,7 +196,7 @@ namespace clase1posta.Models
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@direccion", entidad.Direccion);
-                    command.Parameters.AddWithValue("@idTipo", entidad.IdTipo);
+                    command.Parameters.AddWithValue("@idTipo", entidad.IdTipoInmueble);
                     command.Parameters.AddWithValue("@cantAmbientes", entidad.CantAmbientes);
                     command.Parameters.AddWithValue("@precio", entidad.Precio);
                     command.Parameters.AddWithValue("@estado", entidad.Estado);
@@ -242,14 +241,14 @@ namespace clase1posta.Models
                                 IdPropietario = reader.GetInt32(1),
 
                                 Direccion = reader.GetString(2),
-                                IdTipo = reader.GetInt32(3),
+                                IdTipoInmueble = reader.GetInt32(3),
                                 CantAmbientes = reader.GetInt32(4),
                                 Precio = reader.GetDecimal(5),
                                 Estado = reader.GetBoolean(6),
-                                Tipo = new TipoInmueble
+                                TipoInmueble = new TipoInmueble
                                 {
-                                    idTípoInmueble = reader.GetInt32(3),
-                                    nombreTipo = reader.GetString(9),
+                                    IdTipoInmueble = reader.GetInt32(3),
+                                    NombreTipo = reader.GetString(9),
 
                                 },
                                 Propietario = new Propietario
@@ -316,14 +315,14 @@ namespace clase1posta.Models
                                 IdPropietario = reader.GetInt32(1),
 
                                 Direccion = reader.GetString(2),
-                                IdTipo = reader.GetInt32(3),
+                                IdTipoInmueble = reader.GetInt32(3),
                                 CantAmbientes = reader.GetInt32(4),
                                 Precio = reader.GetDecimal(5),
                                 Estado = reader.GetBoolean(6),
-                                Tipo = new TipoInmueble
+                                TipoInmueble = new TipoInmueble
                                 {
-                                    idTípoInmueble = reader.GetInt32(3),
-                                    nombreTipo = reader.GetString(9),
+                                    IdTipoInmueble = reader.GetInt32(3),
+                                    NombreTipo = reader.GetString(9),
 
                                 },
                                 Propietario = new Propietario
@@ -384,14 +383,14 @@ namespace clase1posta.Models
                                 IdPropietario = reader.GetInt32(1),
 
                                 Direccion = reader.GetString(2),
-                                IdTipo = reader.GetInt32(3),
+                                IdTipoInmueble = reader.GetInt32(3),
                                 CantAmbientes = reader.GetInt32(4),
                                 Precio = reader.GetDecimal(5),
                                 Estado = reader.GetBoolean(6),
-                                Tipo = new TipoInmueble
+                                TipoInmueble = new TipoInmueble
                                 {
-                                    idTípoInmueble = reader.GetInt32(3),
-                                    nombreTipo = reader.GetString(9),
+                                    IdTipoInmueble = reader.GetInt32(3),
+                                    NombreTipo = reader.GetString(9),
 
                                 },
                                 Propietario = new Propietario

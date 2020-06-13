@@ -36,8 +36,8 @@ namespace clase1posta.Models
                     {
                         TipoInmueble p = new TipoInmueble
                         {
-                            idTípoInmueble = reader.GetInt32(0),
-                            nombreTipo = reader.GetString(1),
+                            IdTipoInmueble = reader.GetInt32(0),
+                            NombreTipo = reader.GetString(1),
                            
                         };
                         res.Add(p);
@@ -60,12 +60,12 @@ namespace clase1posta.Models
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
-                    command.Parameters.AddWithValue("@nombre", p.nombreTipo);
+                    command.Parameters.AddWithValue("@nombre", p.NombreTipo);
 
 
                     connection.Open();
                     res = Convert.ToInt32(command.ExecuteScalar());
-                    p.idTípoInmueble = res;
+                    p.IdTipoInmueble = res;
                     connection.Close();
                 }
             }

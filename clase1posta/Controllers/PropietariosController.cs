@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using clase1posta.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -49,6 +50,12 @@ namespace clase1posta.Controllers
         {
             try
             {
+                p.clave = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                           password: p.clave,
+                           salt: System.Text.Encoding.ASCII.GetBytes(configuration["Salt"]),
+                           prf: KeyDerivationPrf.HMACSHA1,
+                           iterationCount: 1000,
+                           numBytesRequested: 256 / 8));
                 // TODO: Add insert logic here
                 repositorioPropietario.Alta(p);
                 TempData["mensaje"] = "Exito";

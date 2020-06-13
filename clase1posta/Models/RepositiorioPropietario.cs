@@ -25,8 +25,8 @@ namespace clase1posta.Models
             int res = -1;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = $"INSERT INTO Propietarios (Nombre,Apellido,Dni,Telefono ,Email) " +
-                    $"VALUES (@nombre,@apellido,@dni,@telefono, @email);" +
+                string sql = $"INSERT INTO Propietarios (Nombre,Apellido,Dni,Telefono ,Email,Clave) " +
+                    $"VALUES (@nombre,@apellido,@dni,@telefono, @email, @clave);" +
                     $"SELECT SCOPE_IDENTITY();";//devuelve el id insertado
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -36,7 +36,9 @@ namespace clase1posta.Models
                     command.Parameters.AddWithValue("@dni", p.dni);
                     command.Parameters.AddWithValue("@telefono", p.telefono);
                     command.Parameters.AddWithValue("@email", p.email);
-                 
+                    command.Parameters.AddWithValue("@clave", p.clave);
+
+
                     connection.Open();
                     res = Convert.ToInt32(command.ExecuteScalar());
                     p.idPropietario = res;
